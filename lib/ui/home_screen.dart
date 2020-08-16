@@ -12,7 +12,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin<HomeScreen> {
   PageController homeScreenPageController = PageController();
   int _page = 1;
 
@@ -26,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
           body: PageView(
             controller: homeScreenPageController,
             children: [
-              ConversationPage(page: _page),
+              ConversationPage(
+                page: _page,
+              ),
               ContactPage(page: _page),
             ],
           ),

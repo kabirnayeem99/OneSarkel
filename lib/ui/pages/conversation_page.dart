@@ -1,12 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/chat_tile.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
-class ConversationPage extends StatelessWidget {
+class ConversationPage extends StatefulWidget {
   const ConversationPage({
     Key key,
     @required int page,
   }) : super(key: key);
+
+  @override
+  _ConversationPageState createState() => _ConversationPageState();
+}
+
+class _ConversationPageState extends State<ConversationPage> {
+  ScrollController _conversationListController;
+  Alignment headerAlignment = Alignment.center;
+  EdgeInsets headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
+  double headerTextSize = 40.0;
+
+  _scrollListener() {
+    if (_conversationListController.offset >=
+            _conversationListController.position.maxScrollExtent &&
+        !_conversationListController.position.outOfRange) {
+      setState(() {
+        headerTextSize = 22.0;
+        headerAlignment = Alignment.topLeft;
+        headerPadding = EdgeInsets.symmetric(
+          vertical: 20.0,
+          horizontal: 20.0,
+        );
+        print("reached bottom");
+      });
+    }
+    if (_conversationListController.offset <=
+            _conversationListController.position.minScrollExtent &&
+        !_conversationListController.position.outOfRange) {
+      setState(
+        () {
+          headerTextSize = 60.0;
+          headerAlignment = Alignment.bottomCenter;
+          headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
+          print("reached top");
+        },
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _conversationListController = ScrollController();
+    _conversationListController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _conversationListController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,25 +75,29 @@ class ConversationPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.only(bottom: 90.0, top: 30.0),
+            alignment: headerAlignment,
+            padding: headerPadding,
             child: Text(
               "Messaging",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 40.0,
+                fontSize: headerTextSize,
               ),
             ),
           ),
-          SizedBox(
-            height: 200.0,
-            child: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (BuildContext context, int index) {
-                return ChatTile(
-                  context: context,
-                  index: index,
-                );
-              },
+          Expanded(
+            child: SizedBox(
+              height: 400.0,
+              child: ListView.builder(
+                controller: _conversationListController,
+                itemCount: 8,
+                itemBuilder: (BuildContext context, int index) {
+                  return ChatTile(
+                    context: context,
+                    index: index,
+                  );
+                },
+              ),
             ),
           )
         ],

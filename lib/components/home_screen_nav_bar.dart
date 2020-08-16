@@ -13,6 +13,9 @@ class HomeScreenBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabBar(
+      border: Border(
+        top: BorderSide.none,
+      ),
       currentIndex: _page,
       backgroundColor: SamsungColor.black,
       items: [
