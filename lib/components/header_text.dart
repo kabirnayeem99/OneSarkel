@@ -24,7 +24,8 @@ class HeaderTextWidget extends StatelessWidget {
           color: Colors.white,
           fontSize: headerTextSize,
         ),
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 400),
+        curve: Curves.slowMiddle,
         child: Text(
           title,
         ),

@@ -7,7 +7,6 @@ import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 class ConversationPage extends StatefulWidget {
   const ConversationPage({
     Key key,
-    @required int page,
   }) : super(key: key);
 
   @override

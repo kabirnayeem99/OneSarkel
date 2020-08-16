@@ -2,20 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class HomeScreenBottomNavBar extends StatelessWidget {
-  const HomeScreenBottomNavBar({
+  HomeScreenBottomNavBar({
     Key key,
     @required int page,
+    this.navigationTapped,
   })  : _page = page,
         super(key: key);
 
   final int _page;
+  final Function navigationTapped;
 
   @override
   Widget build(BuildContext context) {
+    print(_page);
     return CupertinoTabBar(
       border: Border(
         top: BorderSide.none,
       ),
+      onTap: navigationTapped,
       currentIndex: _page,
       backgroundColor: SamsungColor.black,
       items: [
@@ -25,7 +29,9 @@ class HomeScreenBottomNavBar extends StatelessWidget {
             child: Text(
               "Conversations",
               style: TextStyle(
-                color: SamsungColor.primaryDark,
+                color: _page == 0
+                    ? SamsungColor.primaryDark
+                    : SamsungColor.lightGrey,
                 fontSize: 18.0,
               ),
             ),
@@ -38,7 +44,9 @@ class HomeScreenBottomNavBar extends StatelessWidget {
             child: Text(
               "Contatcs",
               style: TextStyle(
-                color: SamsungColor.lightGrey,
+                color: _page == 1
+                    ? SamsungColor.primaryDark
+                    : SamsungColor.lightGrey,
                 fontSize: 18.0,
               ),
             ),

@@ -4,7 +4,7 @@ import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart'
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class ContactPage extends StatefulWidget {
-  ContactPage({Key key, @required int page}) : super(key: key);
+  ContactPage({Key key}) : super(key: key);
 
   @override
   _ContactPageState createState() => _ContactPageState();
