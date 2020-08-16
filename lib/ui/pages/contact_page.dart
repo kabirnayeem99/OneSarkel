@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/contact_tile.dart';
+import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class ContactPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _ContactPageState extends State<ContactPage> {
         !_contactListController.position.outOfRange) {
       setState(
         () {
-          headerTextSize = 60.0;
+          headerTextSize = 40.0;
           headerAlignment = Alignment.bottomCenter;
           headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
           print("reached top");
@@ -59,27 +60,15 @@ class _ContactPageState extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: SamsungColor.primaryDark,
-        child: Icon(
-          Icons.message,
-        ),
-      ),
       backgroundColor: SamsungColor.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            alignment: headerAlignment,
-            padding: headerPadding,
-            child: Text(
-              "Contacts",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: headerTextSize,
-              ),
-            ),
+          HeaderTextWidget(
+            headerAlignment: headerAlignment,
+            headerPadding: headerPadding,
+            headerTextSize: headerTextSize,
+            title: "Contacts",
           ),
           Expanded(
             child: SizedBox(

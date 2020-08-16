@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/chat_tile.dart';
+import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class ConversationPage extends StatefulWidget {
@@ -38,7 +39,7 @@ class _ConversationPageState extends State<ConversationPage> {
         !_conversationListController.position.outOfRange) {
       setState(
         () {
-          headerTextSize = 60.0;
+          headerTextSize = 40.0;
           headerAlignment = Alignment.bottomCenter;
           headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
           print("reached top");
@@ -74,16 +75,11 @@ class _ConversationPageState extends State<ConversationPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            alignment: headerAlignment,
-            padding: headerPadding,
-            child: Text(
-              "Messaging",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: headerTextSize,
-              ),
-            ),
+          HeaderTextWidget(
+            headerAlignment: headerAlignment,
+            headerPadding: headerPadding,
+            headerTextSize: headerTextSize,
+            title: "Messaging",
           ),
           Expanded(
             child: SizedBox(
