@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class RegistrationRaisedButton extends StatelessWidget {
   const RegistrationRaisedButton({
@@ -29,7 +30,7 @@ class RegistrationRaisedButton extends StatelessWidget {
           "Registration",
           style: TextStyle(color: Colors.white),
         ),
-        color: Colors.purple,
+        color: SamsungColor.primaryDark,
       ),
     );
   }
