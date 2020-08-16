@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/screens/login_screen.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 
 void main() {
   runApp(MyApp());

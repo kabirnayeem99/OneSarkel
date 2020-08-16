@@ -8,10 +8,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  PageController homeScreenPageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Container(),
+      child: PageView(
+        controller: homeScreenPageController,
+        children: [Text("who")],
+      ),
     );
   }
 }

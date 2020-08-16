@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/screens/registration_scree.dart';
+import 'package:flutter_samsung_messaging_app_clone/components/registration_raised_button.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/widgets/login_raised_button.dart';
 
-class LogInScreen extends StatefulWidget {
-  LogInScreen({Key key}) : super(key: key);
+class RegistrationScreen extends StatefulWidget {
+  RegistrationScreen({Key key}) : super(key: key);
 
   @override
-  _LogInScreenState createState() => _LogInScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _LogInScreenState extends State<LogInScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +31,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   left: 30.0,
                 ),
                 child: Text(
-                  "Log In",
+                  "Registration",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 45.0,
@@ -68,36 +71,11 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
               Column(
                 children: [
-                  RaisedButton(
-                    elevation: 0.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      "Log In",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.purple,
+                  RegistrationRaisedButton(
+                    screenName: HomeScreen(),
                   ),
-                  RaisedButton(
-                    elevation: 0.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RegistrationScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "Registration",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.purple,
+                  LogInRaisedButton(
+                    screenName: LogInScreen(),
                   ),
                 ],
               ),
