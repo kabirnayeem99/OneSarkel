@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/kabirnayeem99/flutter_one_ui_messaging_app/master/images/logo.png" width="200">
+  <img src="https://github.com/kabirnayeem99/flutter_one_ui_messaging_app/raw/master/images/logo.png" width="100">
 </p>
 <h1 align="center">OneSarkel!</h1>
 <h3 align="center">Instant messaging application inspired by One UI 2</h3>
@@ -37,7 +37,7 @@ This project has been built using the [Flutter](https://flutter.io/) framework, 
 First, clone the repository with the 'clone' command, or just download the zip.
 
 ```
-$ git clone git@github.com:jesusrp98/spacex-go.git
+$ git clone git@github.com:kabirnayeem99/flutter_one_ui_messaging.app.git
 ```
 
 Then, download either Android Studio or Visual Studio Code, with their respective [Flutter editor plugins](https://flutter.io/get-started/editor/). For more information about Flutter installation procedure, check the [official install guide](https://flutter.io/get-started/install/).
