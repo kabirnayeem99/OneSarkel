@@ -54,8 +54,8 @@ There you go, you can now open & edit the project. Enjoy!
 
 ## Author
 
-- **Naimul Kabir**: [Twitter](https://twitter.com/kabirnayeem99) & [LinkedIn](https://www.linkedin.com/in/kabirnayeem99).
-- 
+**Naimul Kabir**: [Twitter](https://twitter.com/kabirnayeem99) & [LinkedIn](https://www.linkedin.com/in/kabirnayeem99).
+
 ## Contributing
 
 If you want to take the time to make this project better, please send me an [email](mailto://kabirnayeem.99@gmail.com) Then, you can open an new [issue](https://github.com/kabirnayeem99/flutter_one_ui_messaging_app/issues/new/choose), of a [pull request](https://github.com/kabirnayeem99/flutter_one_ui_messaging_app/compare).
