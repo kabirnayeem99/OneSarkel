@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 
 void main() {

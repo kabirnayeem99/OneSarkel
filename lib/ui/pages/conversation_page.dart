@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/chat_tile.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/chat_screen.dart';
 
 class ConversationPage extends StatefulWidget {
   const ConversationPage({
@@ -45,6 +46,15 @@ class _ConversationPageState extends State<ConversationPage> {
         },
       );
     }
+  }
+
+  void navigateToChatScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatScreen(),
+      ),
+    );
   }
 
   @override
@@ -90,6 +100,7 @@ class _ConversationPageState extends State<ConversationPage> {
                   return ChatTile(
                     context: context,
                     index: index,
+                    onTap: navigateToChatScreen,
                   );
                 },
               ),

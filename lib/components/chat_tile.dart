@@ -5,14 +5,17 @@ class ChatTile extends StatelessWidget {
     Key key,
     this.context,
     this.index,
+    this.onTap,
   }) : super(key: key);
 
   final BuildContext context;
   final int index;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: Icon(
         Icons.people,
         color: Colors.white,
