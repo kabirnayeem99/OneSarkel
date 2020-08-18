@@ -14,6 +14,7 @@ class SendTextField extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Container(
+              height: 40.0,
               margin: EdgeInsets.only(
                 right: 2.0,
                 left: 10.0,

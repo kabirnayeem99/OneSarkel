@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/send_text_field.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/profile_screen.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({Key key}) : super(key: key);
@@ -10,6 +11,15 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  void navigateToProfile() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProfileScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,7 +27,10 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           backgroundColor: SamsungColor.black,
           elevation: 0.0,
-          title: Text("username4582"),
+          title: GestureDetector(
+            child: Text("username4582"),
+            onTap: navigateToProfile,
+          ),
           actions: [
             IconButton(
               icon: Icon(Icons.call),
@@ -37,27 +50,29 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: SamsungColor.primaryDark,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          bottomLeft: Radius.circular(50.0),
-                          topRight: Radius.circular(60.0),
+                    return Flexible(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: SamsungColor.primaryDark,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            bottomLeft: Radius.circular(50.0),
+                            topRight: Radius.circular(60.0),
+                          ),
                         ),
-                      ),
-                      margin: EdgeInsets.only(
-                        left: 60.0,
-                        top: 16.0,
-                        right: 10.0,
-                      ),
-                      padding: EdgeInsets.all(10.0),
-                      height: 40.0,
-                      width: 30.0,
-                      child: Text(
-                        "wfafdassdfasdfasdf",
-                        style: TextStyle(
-                          color: Colors.white,
+                        margin: EdgeInsets.only(
+                          left: 60.0,
+                          top: 16.0,
+                          right: 10.0,
+                        ),
+                        padding: EdgeInsets.all(10.0),
+                        // height: 40.0,
+                        width: 30.0,
+                        child: Text(
+                          "wfafdassdfas gsdgsdfgsd sfgsdfg sgfsdfgs fgsfgf fgfgs dfasdf",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     );
