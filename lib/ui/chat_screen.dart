@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/components/send_text_field.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -33,49 +34,38 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ListView.builder(itemBuilder: null),
-              Container(
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          right: 2.0,
-                          left: 10.0,
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
-                        child: TextField(
-                          style: TextStyle(color: Colors.black),
-                          textAlignVertical: TextAlignVertical.top,
-                          textAlign: TextAlign.left,
-                          cursorColor: Colors.black,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(60.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            fillColor: Colors.white,
-                            filled: true,
-                          ),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: SamsungColor.primaryDark,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          bottomLeft: Radius.circular(50.0),
+                          topRight: Radius.circular(60.0),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: IconButton(
-                        iconSize: 40.0,
-                        icon: Icon(Icons.send),
-                        onPressed: () {
-                          print("send button tapped");
-                        },
-                        color: SamsungColor.primary,
+                      margin: EdgeInsets.only(
+                        left: 60.0,
+                        top: 16.0,
+                        right: 10.0,
                       ),
-                    ),
-                  ],
+                      padding: EdgeInsets.all(10.0),
+                      height: 40.0,
+                      width: 30.0,
+                      child: Text(
+                        "wfafdassdfasdfasdf",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: 10,
                 ),
               ),
+              SendTextField(),
             ],
           ),
         ),
