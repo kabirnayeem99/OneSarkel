@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/wrapper.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LogInScreen(),
+      home: Wrapper(),
     );
   }
 }
