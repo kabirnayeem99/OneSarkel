@@ -1,22 +1,36 @@
-import 'dart:html';
-
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Authentication {
+class AppAuthentication {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future signInAnonymously() async {
+  Future<FirebaseUser> signInAnonymously() async {
     try {
-      UserCredential result = await _firebaseAuth.signInAnonymously();
-      User user = result.user;
+      AuthResult result = await _firebaseAuth.signInAnonymously();
+      FirebaseUser user = result.user;
       return user;
     } catch (e) {
-      print("Error from Firebase Anonymous sign in: $e");
+      print("Error from Firebase Anonymous sign in: ${e.toString()}");
       return null;
     }
   }
 
-  // TODO: sign in with email & password
+  Future<FirebaseUser> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      AuthResult result;
+      result = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      FirebaseUser user = result.user;
+      return user;
+    } catch (e) {
+      print("Error from Firebase Email and password sign in: $e");
+      return null;
+    }
+  }
+
+  // Future<User>
 
   // TODO: register with email & password
 
