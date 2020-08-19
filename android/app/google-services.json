@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "105117288087",
+    "firebase_url": "https://onesarkel.firebaseio.com",
+    "project_id": "onesarkel",
+    "storage_bucket": "onesarkel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105117288087:android:fb3af1e05fb77e2ca00bd2",
+        "android_client_info": {
+          "package_name": "me.kbrlovescoding.onesarkel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105117288087-6lndju6qc48rar527l2aibukvmunmgt6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFl2nmhS39A6aZhyb06zPxn9ZP5mnanpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105117288087-6lndju6qc48rar527l2aibukvmunmgt6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
