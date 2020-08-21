@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 
 class AppAuthentication {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -30,9 +32,6 @@ class AppAuthentication {
     }
   }
 
-  // Future<User>
-
-  // TODO: register with email & password
   Future<FirebaseUser> createUser(String email, String password) async {
     try {
       AuthResult result;
@@ -46,8 +45,13 @@ class AppAuthentication {
     }
   }
 
-  // TODO: signout
-
+  signOut(BuildContext context) async {
+    await _firebaseAuth.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LogInScreen(),
+      ),
+    );
+  }
 }
-
-FirebaseAuth firebaseAuth = FirebaseAuth.instance;
