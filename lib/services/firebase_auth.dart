@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/components/utilities.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
+
+Firestore firestore = Firestore();
 
 class AppAuthentication {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -32,20 +37,37 @@ class AppAuthentication {
     }
   }
 
-  Future<FirebaseUser> createUser(String email, String password) async {
+  Future<FirebaseUser> createUser(
+    String email,
+    String password,
+  ) async {
+    print(
+        "starting createuser process. email is $email. and password is$password");
     try {
       AuthResult result;
       result = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      FirebaseUser user = result.user;
-      return user;
+        email: email,
+        password: password,
+      );
+      print("$result");
+      FirebaseUser firebaseUser = result.user;
+      String userId = firebaseUser.uid;
+      String username = Utilities.getUsername(email);
+      User user = User(
+        userId: userId,
+        username: username,
+      );
+      await firestore.collection("users").document(userId).setData(
+            user.toMap(firebaseUser),
+          );
+      return firebaseUser;
     } catch (e) {
-      print("Error from Firebase creatin new user: $e");
+      print("Error from Firebase creating new user: $e");
       return null;
     }
   }
 
-  signOut(BuildContext context) async {
+  Future<void> signOut(BuildContext context) async {
     await _firebaseAuth.signOut();
     Navigator.push(
       context,

@@ -84,11 +84,11 @@ class _LogInScreenState extends State<LogInScreen> {
                     password: password,
                     screenName: HomeScreen(),
                   ),
-                  RegistrationRaisedButton(
-                    email: email,
-                    password: password,
-                    screenName: RegistrationScreen(),
-                  ),
+                  // RegistrationRaisedButton(
+                  //   email: email,
+                  //   password: password,
+                  //   screenName: RegistrationScreen(),
+                  // ),
                 ],
               ),
             ],
