@@ -13,6 +13,8 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,6 +44,9 @@ class _LogInScreenState extends State<LogInScreen> {
                 height: 50.0,
                 margin: EdgeInsets.all(10.0),
                 child: TextField(
+                  onChanged: (value) {
+                    email = value;
+                  },
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -57,6 +62,9 @@ class _LogInScreenState extends State<LogInScreen> {
                 height: 50.0,
                 margin: EdgeInsets.all(10.0),
                 child: TextField(
+                  onChanged: (value) {
+                    password = value;
+                  },
                   textAlignVertical: TextAlignVertical.center,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
@@ -72,9 +80,13 @@ class _LogInScreenState extends State<LogInScreen> {
               Column(
                 children: [
                   LogInRaisedButton(
+                    email: email,
+                    password: password,
                     screenName: HomeScreen(),
                   ),
                   RegistrationRaisedButton(
+                    email: email,
+                    password: password,
                     screenName: RegistrationScreen(),
                   ),
                 ],

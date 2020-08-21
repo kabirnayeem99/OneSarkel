@@ -33,6 +33,18 @@ class AppAuthentication {
   // Future<User>
 
   // TODO: register with email & password
+  Future<FirebaseUser> createUser(String email, String password) async {
+    try {
+      AuthResult result;
+      result = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
+      return user;
+    } catch (e) {
+      print("Error from Firebase creatin new user: $e");
+      return null;
+    }
+  }
 
   // TODO: signout
 

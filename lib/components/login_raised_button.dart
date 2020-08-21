@@ -7,9 +7,13 @@ class LogInRaisedButton extends StatelessWidget {
   LogInRaisedButton({
     Key key,
     this.screenName,
+    this.email,
+    this.password,
   }) : super(key: key);
 
   final Widget screenName;
+  final String email;
+  final String password;
   final AppAuthentication _appAuthentication = AppAuthentication();
 
   @override
@@ -20,7 +24,10 @@ class LogInRaisedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(50.0),
       ),
       onPressed: () async {
-        var result = await _appAuthentication.signInAnonymously();
+        var result = await _appAuthentication.signInWithEmailAndPassword(
+          email,
+          password,
+        );
         result != null
             ? Navigator.push(
                 context,
