@@ -9,6 +9,7 @@ Firestore firestore = Firestore();
 
 class AppAuthentication {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final Firestore _firestore = Firestore.instance;
 
   Future<FirebaseUser> signInAnonymously() async {
     try {
@@ -75,5 +76,13 @@ class AppAuthentication {
         builder: (context) => LogInScreen(),
       ),
     );
+  }
+
+  Future<String> getCurrentUser() async {
+    String currentUserId;
+    await _firebaseAuth.currentUser().then((user) {
+      currentUserId = user.uid;
+    });
+    return currentUserId;
   }
 }

@@ -69,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         // height: 40.0,
                         width: 30.0,
                         child: Text(
-                          "wfafdassdfas gsdgsdfgsd sfgsdfg sgfsdfgs fgsfgf fgfgs dfasdf",
+                          "wfafdassdfas gsdgsdfgsd sfgsdfg sgfsdfgs ",
                           style: TextStyle(
                             color: Colors.white,
                           ),
