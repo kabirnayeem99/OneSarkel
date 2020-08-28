@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/registration_screen.dart';
 
 class Wrapper extends StatefulWidget {

@@ -82,7 +82,7 @@ class _ContactPageState extends State<ContactPage> {
             builder: (BuildContext context,
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasData) {
-                Map<String, dynamic> data = snapshot.data();
+                Map<String, dynamic> data = snapshot.data.data;
                 return HeaderTextWidget(
                   headerAlignment: headerAlignment,
                   headerPadding: headerPadding,

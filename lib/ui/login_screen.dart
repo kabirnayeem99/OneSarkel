@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/login_raised_button.dart';
-import 'package:flutter_samsung_messaging_app_clone/components/registration_raised_button.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/registration_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   LogInScreen({Key key}) : super(key: key);
