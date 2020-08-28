@@ -20,7 +20,7 @@ class _ContactPageState extends State<ContactPage> {
   AppAuthentication _appAuthentication = AppAuthentication();
   String userId;
   final CollectionReference userCollection =
-      Firestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
 
   _scrollListener() {
     if (_contactListController.offset >=
@@ -78,16 +78,16 @@ class _ContactPageState extends State<ContactPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FutureBuilder(
-            future: userCollection.document(userId).get(),
+            future: userCollection.doc(userId).get(),
             builder: (BuildContext context,
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasData) {
-                Map<String, dynamic> data = snapshot.data.data;
+                DocumentSnapshot data = snapshot.data;
                 return HeaderTextWidget(
                   headerAlignment: headerAlignment,
                   headerPadding: headerPadding,
                   headerTextSize: headerTextSize,
-                  title: data["username"] ?? "",
+                   title:  "",
                 );
               }
             },

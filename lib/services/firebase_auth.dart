@@ -5,16 +5,16 @@ import 'package:flutter_samsung_messaging_app_clone/components/utilities.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 
-Firestore firestore = Firestore();
+FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class AppAuthentication {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final Firestore _firestore = Firestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<FirebaseUser> signInAnonymously() async {
+  Future<User> signInAnonymously() async {
     try {
-      AuthResult result = await _firebaseAuth.signInAnonymously();
-      FirebaseUser user = result.user;
+      UserCredential result = await _firebaseAuth.signInAnonymously();
+      User user = result.user;
       return user;
     } catch (e) {
       print("Error from Firebase Anonymous sign in: ${e.toString()}");
@@ -22,15 +22,15 @@ class AppAuthentication {
     }
   }
 
-  Future<FirebaseUser> signInWithEmailAndPassword(
+  Future<User> signInWithEmailAndPassword(
       String email, String password) async {
     try {
-      AuthResult result;
+      UserCredential result;
       result = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      FirebaseUser user = result.user;
+      User user = result.user;
       return user;
     } catch (e) {
       print("Error from Firebase Email and password sign in: $e");
@@ -38,27 +38,27 @@ class AppAuthentication {
     }
   }
 
-  Future<FirebaseUser> createUser(
+  Future<User> createUser(
     String email,
     String password,
   ) async {
     print(
         "starting createuser process. email is $email. and password is$password");
     try {
-      AuthResult result;
+      UserCredential result;
       result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       print("$result");
-      FirebaseUser firebaseUser = result.user;
+      User firebaseUser = result.user;
       String userId = firebaseUser.uid;
       String username = Utilities.getUsername(email);
-      User user = User(
+      MUser user = MUser(
         userId: userId,
         username: username,
       );
-      await firestore.collection("users").document(userId).setData(
+      await firestore.collection("users").doc(userId).set(
             user.toMap(firebaseUser),
           );
       return firebaseUser;
@@ -79,10 +79,7 @@ class AppAuthentication {
   }
 
   Future<String> getCurrentUser() async {
-    String currentUserId;
-    await _firebaseAuth.currentUser().then((user) {
-      currentUserId = user.uid;
-    });
+    String currentUserId = _firebaseAuth.currentUser.uid;
     return currentUserId;
   }
 }

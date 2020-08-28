@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class User {
+class MUser {
   String userId;
   String username;
 
-  User({
+  MUser({
     this.userId,
     this.username,
   });
 
-  Map toMap(FirebaseUser user) {
+  Map toMap(User user) {
     var data = Map<String, dynamic>();
     data["userId"] = this.userId;
     data["username"] = this.username;
