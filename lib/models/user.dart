@@ -1,23 +1,26 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/components/utilities.dart';
 
-class MUser {
-  String userId;
-  String username;
+@immutable
+class User {
+  User({this.uid, this.username});
+  final String uid;
+  String username = Utilities.getUsername();
 
-  MUser({
-    this.userId,
-    this.username,
-  });
-
-  Map toMap(User user) {
-    var data = Map<String, dynamic>();
-    data["userId"] = this.userId;
-    data["username"] = this.username;
-    return data;
+  factory User.fromMap(Map<String, dynamic> data) {
+    if (data == null) {
+      return null;
+    }
+    final String username = data['downloadUrl'];
+    if (username == null) {
+      return null;
+    }
+    return User(username: username);
   }
 
-  fromMap(Map<String, dynamic> mapData) {
-    this.userId = mapData["userId"];
-    this.username = mapData["username"];
+  Map<String, dynamic> toMap() {
+    return {
+      'downloadUrl': downloadUrl,
+    };
   }
 }

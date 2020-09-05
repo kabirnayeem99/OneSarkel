@@ -11,9 +11,9 @@ String username;
 Random random = Random();
 
 class Utilities {
-  static String getUsername(String email) {
+  static String getUsername() {
     random = Random();
-    String username = "_${email.split('@')[0]}";
+    String username = "_hohi";
 
 // generates a new Random object
 
