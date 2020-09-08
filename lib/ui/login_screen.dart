@@ -13,7 +13,7 @@ class _LogInScreenState extends State<LogInScreen> {
   String email;
   String password;
   final _formKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuthService();
+  final _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     borderRadius: BorderRadius.circular(50.0),
                   ),
                   onPressed: () async {
-                    var result = await _auth.signInWithEmailAndPassword(
+                    var result = await _auth.signIn(
                       email,
                       password,
                     );

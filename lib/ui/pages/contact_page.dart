@@ -16,7 +16,7 @@ class _ContactPageState extends State<ContactPage> {
   Alignment headerAlignment = Alignment.center;
   EdgeInsets headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
   double headerTextSize = 40.0;
-  FirebaseAuthService _appAuthentication = FirebaseAuthService();
+  AuthService _appAuthentication = AuthService();
   String userId;
   final CollectionReference userCollection =
       Firestore.instance.collection('users');

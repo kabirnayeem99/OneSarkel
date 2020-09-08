@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/registration_screen.dart';
+import 'package:provider/provider.dart';
 
 class Wrapper extends StatefulWidget {
   Wrapper({Key key}) : super(key: key);
@@ -11,7 +14,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
-    //TODO: will return homescreen or login screen based on user data
-    return RegistrationScreen();
+    final user = Provider.of<User>(context);
+    return user == null ? RegistrationScreen() : HomeScreen();
   }
 }

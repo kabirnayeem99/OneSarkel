@@ -1,54 +1,50 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/components/utilities.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 
 Firestore firestore = Firestore();
 
-class FirebaseAuthService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<FirebaseUser> signInWithEmailAndPassword(
-      String email, String password) async {
+  Stream<User> get user {
+    return _auth.onAuthStateChanged.map(_userFromFirebase);
+  }
+
+  User _userFromFirebase(FirebaseUser user) {
+    return user == null
+        ? null
+        : User(userId: user.uid, username: "u${user.uid}");
+  }
+
+  Future signIn(String email, String password) async {
     try {
       AuthResult result;
-      result = await _firebaseAuth.signInWithEmailAndPassword(
+      result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       FirebaseUser user = result.user;
-      return user;
+      return _userFromFirebase(user);
     } catch (e) {
       print("Error from Firebase Email and password sign in: $e");
       return null;
     }
   }
 
-  Future<FirebaseUser> createUser(
-    String email,
-    String password,
-  ) async {
+  Future register(String email,
+      String password,) async {
     print(
         "starting createuser process. email is $email. and password is$password");
     try {
       AuthResult result;
-      result = await _firebaseAuth.createUserWithEmailAndPassword(
+      result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print("$result");
-      FirebaseUser firebaseUser = result.user;
-      String userId = firebaseUser.uid;
-      String username = Utilities.getUsername(email);
-      User user = User(
-        userId: userId,
-        username: username,
-      );
-      await firestore.collection("users").document(userId).setData(
-            user.toMap(firebaseUser),
-          );
-      return firebaseUser;
+      FirebaseUser user = result.user;
+      return _userFromFirebase(user);
     } catch (e) {
       print("Error from Firebase creating new user: $e");
       return null;
@@ -56,12 +52,12 @@ class FirebaseAuthService {
   }
 
   Future<void> signOut(BuildContext context) async {
-    await _firebaseAuth.signOut();
+    await _auth.signOut();
   }
 
   Future<String> getCurrentUser() async {
     String currentUserId;
-    await _firebaseAuth.currentUser().then((user) {
+    await _auth.currentUser().then((user) {
       currentUserId = user.uid;
     });
     return currentUserId;

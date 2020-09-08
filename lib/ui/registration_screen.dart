@@ -13,7 +13,7 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   String _email;
   String _pass;
-  FirebaseAuthService _auth = FirebaseAuthService();
+  AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -96,7 +96,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         onPressed: () async {
                           print(
                               "in registration screen email is $_email and password is $_pass.");
-                          await _auth.createUser(_email, _pass).then((result) {
+                          await _auth.register(_email, _pass).then((result) {
                             if (result != null) {
                               print("registration successful");
                             } else {
