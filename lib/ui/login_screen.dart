@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -12,6 +13,7 @@ class _LogInScreenState extends State<LogInScreen> {
   String email;
   String password;
   final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +87,25 @@ class _LogInScreenState extends State<LogInScreen> {
                 Column(
                   children: [
                     RaisedButton(
-                      child: Text("ddfad"),
-                      onPressed: () {},
-                    )
+                      elevation: 0.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      onPressed: () async {
+                        var result = await _auth.signInWithEmailAndPassword(
+                          email,
+                          password,
+                        );
+                        if (result != null) {
+                          print("sing in successful");
+                        }
+                      },
+                      child: Text(
+                        "Log In",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: SamsungColor.primaryDark,
+                    ),
                   ],
                 ),
               ],

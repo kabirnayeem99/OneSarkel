@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({Key key}) : super(key: key);
@@ -48,7 +49,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   margin: EdgeInsets.all(10.0),
                   child: TextFormField(
                     validator: (typedEmail) =>
-                    typedEmail.isEmpty ? "Enter an email" : null,
+                        typedEmail.isEmpty ? "Enter an email" : null,
                     onChanged: (typedEmail) {
                       setState(() {
                         email = typedEmail;
@@ -107,26 +108,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                     ),
                     RaisedButton(
-                      elevation: 0.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      onPressed: () async {
-                        var result =
-                        await _auth.signInWithEmailAndPassword(
-                          email,
-                          password,
-                        );
-                        if (result != null) {
-                          print("sing in successful");
-                        }
-                      },
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: SamsungColor.primaryDark,
-                    ),
+                        child: Text(
+                          "Log In",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: SamsungColor.primaryDark,
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LogInScreen(),
+                            ),
+                          );
+                        }),
                   ],
                 ),
               ],
@@ -139,7 +137,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   InputDecoration textInPutDecoration() {
     return InputDecoration(
-
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(60.0),
         borderSide: BorderSide.none,
