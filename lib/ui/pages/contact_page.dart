@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/contact_tile.dart';
-import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
@@ -17,7 +16,7 @@ class _ContactPageState extends State<ContactPage> {
   Alignment headerAlignment = Alignment.center;
   EdgeInsets headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
   double headerTextSize = 40.0;
-  AppAuthentication _appAuthentication = AppAuthentication();
+  FirebaseAuthService _appAuthentication = FirebaseAuthService();
   String userId;
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
@@ -77,21 +76,7 @@ class _ContactPageState extends State<ContactPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FutureBuilder(
-            future: userCollection.document(userId).get(),
-            builder: (BuildContext context,
-                AsyncSnapshot<DocumentSnapshot> snapshot) {
-              if (snapshot.hasData) {
-                Map<String, dynamic> data = snapshot.data();
-                return HeaderTextWidget(
-                  headerAlignment: headerAlignment,
-                  headerPadding: headerPadding,
-                  headerTextSize: headerTextSize,
-                  title: data["username"] ?? "",
-                );
-              }
-            },
-          ),
+
           Expanded(
             child: SizedBox(
               height: 400.0,

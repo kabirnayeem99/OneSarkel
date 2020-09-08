@@ -1,10 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/components/login_raised_button.dart';
-import 'package:flutter_samsung_messaging_app_clone/components/registration_raised_button.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({Key key}) : super(key: key);
@@ -18,8 +16,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String password = "";
   TextEditingController emailFieldController;
   TextEditingController passwordFieldController;
-  final _formKey = GlobalKey<FormState>();
-  AppAuthentication _appAuthentication = AppAuthentication();
+  FirebaseAuthService _appAuthentication = FirebaseAuthService();
 
   @override
   void initState() {
@@ -30,6 +27,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return Container(
       color: SamsungColor.black,
       child: SafeArea(
@@ -60,7 +58,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   margin: EdgeInsets.all(10.0),
                   child: TextFormField(
                     validator: (typedEmail) =>
-                        typedEmail.isEmpty ? "Enter an email" : null,
+                    typedEmail.isEmpty ? "Enter an email" : null,
                     controller: emailFieldController,
                     onChanged: (typedEmail) {
                       setState(() {
@@ -138,8 +136,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         color: SamsungColor.primaryDark,
                       ),
                     ),
-                    LogInRaisedButton(
-                      screenName: LogInScreen(),
+                    RaisedButton(
+                      elevation: 0.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      onPressed: () async {
+                        var result =
+                            await _appAuthentication.signInWithEmailAndPassword(
+                          email,
+                          password,
+                        );
+                      },
+                      child: Text(
+                        "Log In",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: SamsungColor.primaryDark,
                     ),
                   ],
                 ),

@@ -3,24 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/utilities.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 
 Firestore firestore = Firestore();
 
-class AppAuthentication {
+class FirebaseAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
-
-  Future<FirebaseUser> signInAnonymously() async {
-    try {
-      AuthResult result = await _firebaseAuth.signInAnonymously();
-      FirebaseUser user = result.user;
-      return user;
-    } catch (e) {
-      print("Error from Firebase Anonymous sign in: ${e.toString()}");
-      return null;
-    }
-  }
 
   Future<FirebaseUser> signInWithEmailAndPassword(
       String email, String password) async {
@@ -70,12 +58,6 @@ class AppAuthentication {
 
   Future<void> signOut(BuildContext context) async {
     await _firebaseAuth.signOut();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LogInScreen(),
-      ),
-    );
   }
 
   Future<String> getCurrentUser() async {
