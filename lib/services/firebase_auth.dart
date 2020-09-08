@@ -8,7 +8,6 @@ Firestore firestore = Firestore();
 
 class FirebaseAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final Firestore _firestore = Firestore.instance;
 
   Future<FirebaseUser> signInWithEmailAndPassword(
       String email, String password) async {

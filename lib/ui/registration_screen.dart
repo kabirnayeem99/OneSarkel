@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({Key key}) : super(key: key);
@@ -12,22 +11,13 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  String email = "";
-  String password = "";
-  TextEditingController emailFieldController;
-  TextEditingController passwordFieldController;
-  FirebaseAuthService _appAuthentication = FirebaseAuthService();
-
-  @override
-  void initState() {
-    super.initState();
-    emailFieldController = TextEditingController();
-    passwordFieldController = TextEditingController();
-  }
+  String email;
+  String password;
+  FirebaseAuthService _auth = FirebaseAuthService();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
     return Container(
       color: SamsungColor.black,
       child: SafeArea(
@@ -59,31 +49,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: TextFormField(
                     validator: (typedEmail) =>
                     typedEmail.isEmpty ? "Enter an email" : null,
-                    controller: emailFieldController,
                     onChanged: (typedEmail) {
                       setState(() {
                         email = typedEmail;
                       });
                     },
                     textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(60.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      fillColor: SamsungColor.lightGrey,
-                      filled: true,
-                    ),
+                    decoration: textInPutDecoration(),
                   ),
                 ),
                 Container(
                   height: 50.0,
                   margin: EdgeInsets.all(10.0),
                   child: TextFormField(
-                    validator: (typedPassword) => typedPassword.length < 6
+                    validator: (typedPassword) =>
+                    typedPassword.length < 6
                         ? 'Pass with at least 6 characters'
                         : null,
-                    controller: passwordFieldController,
                     onChanged: (typedPassword) {
                       setState(() {
                         password = typedPassword;
@@ -91,14 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     },
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(60.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      fillColor: SamsungColor.lightGrey,
-                      filled: true,
-                    ),
+                    decoration: textInPutDecoration(),
                   ),
                 ),
                 Column(
@@ -113,16 +88,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         onPressed: () async {
                           print(
                               "in registration screen email is $email and password is $password.");
-                          await _appAuthentication
+                          await _auth
                               .createUser(email, password)
                               .then((result) {
                             if (result != null) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
-                                ),
-                              );
+                              print("registration successful");
                             } else {
                               print(
                                   "Registration screen: user returned $result");
@@ -143,10 +113,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       onPressed: () async {
                         var result =
-                            await _appAuthentication.signInWithEmailAndPassword(
+                        await _auth.signInWithEmailAndPassword(
                           email,
                           password,
                         );
+                        if (result != null) {
+                          print("sing in successful");
+                        }
                       },
                       child: Text(
                         "Log In",
@@ -161,6 +134,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  InputDecoration textInPutDecoration() {
+    return InputDecoration(
+
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(60.0),
+        borderSide: BorderSide.none,
+      ),
+      fillColor: SamsungColor.lightGrey,
+      filled: true,
     );
   }
 }
