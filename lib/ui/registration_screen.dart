@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
@@ -12,13 +11,14 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  String email;
-  String password;
+  String _email;
+  String _pass;
   FirebaseAuthService _auth = FirebaseAuthService();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    // Main container which covers the whole screen
     return Container(
       color: SamsungColor.black,
       child: SafeArea(
@@ -26,8 +26,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           backgroundColor: SamsungColor.black,
           body: Form(
             key: _formKey,
+            // ListView widget that holds all the widgets in the screen
+            // including the two textfield and buttons
             child: ListView(
               children: [
+                // First container that holds the title of the screen
+                // which in this case is Registration
                 Container(
                   alignment: Alignment.topCenter,
                   margin: EdgeInsets.only(
@@ -44,6 +48,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ),
                 ),
+                // Second container which holds the first email textfield
                 Container(
                   height: 50.0,
                   margin: EdgeInsets.all(10.0),
@@ -52,24 +57,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         typedEmail.isEmpty ? "Enter an email" : null,
                     onChanged: (typedEmail) {
                       setState(() {
-                        email = typedEmail;
+                        _email = typedEmail;
                       });
                     },
                     textAlign: TextAlign.center,
                     decoration: textInPutDecoration(),
                   ),
                 ),
+                // Third container which holds the second pass textfield
                 Container(
                   height: 50.0,
                   margin: EdgeInsets.all(10.0),
                   child: TextFormField(
-                    validator: (typedPassword) =>
-                    typedPassword.length < 6
+                    validator: (typedPassword) => typedPassword.length < 6
                         ? 'Pass with at least 6 characters'
                         : null,
                     onChanged: (typedPassword) {
                       setState(() {
-                        password = typedPassword;
+                        _pass = typedPassword;
                       });
                     },
                     textAlignVertical: TextAlignVertical.center,
@@ -77,8 +82,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     decoration: textInPutDecoration(),
                   ),
                 ),
+                // Column that holds two buttons: registration and login
                 Column(
                   children: [
+                    // First button: registration button
                     SizedBox(
                       width: 150.0,
                       child: RaisedButton(
@@ -88,10 +95,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         onPressed: () async {
                           print(
-                              "in registration screen email is $email and password is $password.");
-                          await _auth
-                              .createUser(email, password)
-                              .then((result) {
+                              "in registration screen email is $_email and password is $_pass.");
+                          await _auth.createUser(_email, _pass).then((result) {
                             if (result != null) {
                               print("registration successful");
                             } else {
@@ -107,6 +112,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         color: SamsungColor.primaryDark,
                       ),
                     ),
+                    // Second button: login button
                     RaisedButton(
                         child: Text(
                           "Log In",

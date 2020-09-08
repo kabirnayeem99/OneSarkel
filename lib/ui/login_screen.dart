@@ -19,13 +19,19 @@ class _LogInScreenState extends State<LogInScreen> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
+      // Main container which covers the whole screen
+
       child: Container(
         color: SamsungColor.black,
         child: SafeArea(
           child: Scaffold(
             backgroundColor: SamsungColor.black,
+            // ListView widget that holds all the widgets in the screen
+            // including the two textfield and buttons
             body: ListView(
               children: [
+                // First container that holds the title of the screen
+                // which in this case is Registration
                 Container(
                   alignment: Alignment.topCenter,
                   margin: EdgeInsets.only(
@@ -42,6 +48,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                 ),
+                // Second container which holds the first email textfield
                 Container(
                   height: 50.0,
                   margin: EdgeInsets.all(10.0),
@@ -62,6 +69,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                 ),
+                // Third container which holds the second pass textfield
                 Container(
                   height: 50.0,
                   margin: EdgeInsets.all(10.0),
@@ -84,29 +92,26 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                 ),
-                Column(
-                  children: [
-                    RaisedButton(
-                      elevation: 0.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      onPressed: () async {
-                        var result = await _auth.signInWithEmailAndPassword(
-                          email,
-                          password,
-                        );
-                        if (result != null) {
-                          print("sing in successful");
-                        }
-                      },
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: SamsungColor.primaryDark,
-                    ),
-                  ],
+                // Fourth comes the login button
+                RaisedButton(
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  onPressed: () async {
+                    var result = await _auth.signInWithEmailAndPassword(
+                      email,
+                      password,
+                    );
+                    if (result != null) {
+                      print("sing in successful");
+                    }
+                  },
+                  child: Text(
+                    "Log In",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: SamsungColor.primaryDark,
                 ),
               ],
             ),
