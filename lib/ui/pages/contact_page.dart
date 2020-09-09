@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/contact_tile.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
+import 'package:provider/provider.dart';
 
 class ContactPage extends StatefulWidget {
   ContactPage({Key key}) : super(key: key);
@@ -71,22 +73,21 @@ class _ContactPageState extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _userData = Provider.of<List<UserData>>(context);
     return Scaffold(
       backgroundColor: SamsungColor.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           Expanded(
             child: SizedBox(
               height: 400.0,
               child: ListView.builder(
                 controller: _contactListController,
-                itemCount: 20,
+                itemCount: _userData.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ContactTile(
-                    context: context,
-                    index: index,
+                    userData: _userData[index],
                   );
                 },
               ),

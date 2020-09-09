@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'models/user.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

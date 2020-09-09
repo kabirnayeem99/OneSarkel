@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class ContactTile extends StatelessWidget {
   const ContactTile({
     Key key,
-    this.context,
-    this.index,
+    this.userData,
   }) : super(key: key);
 
-  final BuildContext context;
-  final int index;
+  final UserData userData;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class ContactTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        "user_name${index + 1}3${index * 11}",
+        "${userData.username}",
         style: TextStyle(
           color: Colors.white,
         ),
