@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/contact_tile.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +18,7 @@ class _ContactPageState extends State<ContactPage> {
   Alignment headerAlignment = Alignment.center;
   EdgeInsets headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
   double headerTextSize = 40.0;
-  AuthService _appAuthentication = AuthService();
-  String userId;
+  AuthService _auth = AuthService();
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
@@ -51,18 +50,13 @@ class _ContactPageState extends State<ContactPage> {
     }
   }
 
-  void getCurrentUserId() async {
-    setState(() async {
-      userId = await _appAuthentication.getCurrentUser();
-    });
-  }
+
 
   @override
   void initState() {
     super.initState();
     _contactListController = ScrollController();
     _contactListController.addListener(_scrollListener);
-    getCurrentUserId();
   }
 
   @override
@@ -73,7 +67,7 @@ class _ContactPageState extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _userData = Provider.of<List<UserData>>(context);
+    final _userData = Provider.of<List<UserData>>(context) ?? List<UserData>();
     return Scaffold(
       backgroundColor: SamsungColor.black,
       body: Column(

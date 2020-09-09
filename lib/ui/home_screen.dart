@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/home_screen_nav_bar.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/firestore_database.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/database.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/pages/contact_page.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/pages/conversation_page.dart';

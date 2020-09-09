@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
+    return StreamProvider<CurrentUser>.value(
       value: _authService.user,
       child: MaterialApp(
         title: 'Messaging',

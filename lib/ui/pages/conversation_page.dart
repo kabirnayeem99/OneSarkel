@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/chat_tile.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/chat_screen.dart';
 
@@ -74,7 +75,9 @@ class _ConversationPageState extends State<ConversationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          AuthService().signOut();
+        },
         backgroundColor: SamsungColor.primaryDark,
         child: Icon(
           Icons.message,

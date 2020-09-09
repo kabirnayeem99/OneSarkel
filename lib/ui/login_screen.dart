@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class LogInScreen extends StatefulWidget {

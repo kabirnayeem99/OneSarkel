@@ -18,13 +18,13 @@ class ContactTile extends StatelessWidget {
         color: Colors.white,
       ),
       title: Text(
-        "First Name",
+        userData.username,
         style: TextStyle(
           color: Colors.white,
         ),
       ),
       subtitle: Text(
-        "${userData.username}",
+        "${userData.email}",
         style: TextStyle(
           color: Colors.white,
         ),

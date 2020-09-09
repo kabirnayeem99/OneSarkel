@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 
@@ -94,16 +94,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           borderRadius: BorderRadius.circular(50.0),
                         ),
                         onPressed: () async {
-                          print(
-                              "in registration screen email is $_email and password is $_pass.");
-                          await _auth.register(_email, _pass).then((result) {
-                            if (result != null) {
-                              print("registration successful");
-                            } else {
-                              print(
-                                  "Registration screen: user returned $result");
-                            }
-                          });
+                          if (_formKey.currentState.validate()) {
+                            print("in registration screen email is $_email" +
+                                "and password is $_pass.");
+                            await _auth.register(_email, _pass).then((result) {
+                              if (result != null) {
+                                print("registration successful");
+                              } else {
+                                print(
+                                    "Registration screen: user returned $result");
+                              }
+                            });
+                          }
                         },
                         child: Text(
                           "Registration",

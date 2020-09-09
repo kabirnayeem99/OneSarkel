@@ -14,7 +14,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<CurrentUser>(context);
     return user == null ? RegistrationScreen() : HomeScreen();
   }
 }

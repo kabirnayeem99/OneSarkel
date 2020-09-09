@@ -9,6 +9,13 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
+  Future updateUserData(String username, String email) async {
+    return await userCollection.document(uid).setData({
+      "username": username,
+      "email": email,
+    });
+  }
+
   List<UserData> _updateUserDataFromSnapshot(QuerySnapshot snapshot) {
     // this is a private function which takes a firestore snapshot
     // and turns simplifies this using a userData model. After retrieving all
@@ -17,6 +24,7 @@ class DatabaseService {
       return UserData(
         uid: document.data["userId"],
         username: document.data["username"],
+        email: document.data["email"],
       );
     }).toList();
   }
