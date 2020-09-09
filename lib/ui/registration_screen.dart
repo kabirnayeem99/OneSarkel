@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({Key key}) : super(key: key);
@@ -126,11 +125,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           borderRadius: BorderRadius.circular(50.0),
                         ),
                         onPressed: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LogInScreen(),
-                            ),
+                          var result = await _auth.signIn(
+                            _email,
+                            _pass,
                           );
                         }),
                   ],
