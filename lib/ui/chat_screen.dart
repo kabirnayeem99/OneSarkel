@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/send_text_field.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/profile_screen.dart';
 
 class ChatScreen extends StatefulWidget {
-  ChatScreen({Key key}) : super(key: key);
+  ChatScreen({Key key, this.user}) : super(key: key);
+  final UserData user;
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -22,13 +24,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.user);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: SamsungColor.black,
           elevation: 0.0,
           title: GestureDetector(
-            child: Text("username4582"),
+            child: Text("${widget.user.username}"),
             onTap: navigateToProfile,
           ),
           actions: [

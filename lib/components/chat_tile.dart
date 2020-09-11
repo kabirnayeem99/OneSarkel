@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/chat_screen.dart';
 
 class ChatTile extends StatelessWidget {
   const ChatTile({
     Key key,
-    this.context,
-    this.index,
-    this.onTap,
+    this.userData,
   }) : super(key: key);
 
-  final BuildContext context;
-  final int index;
-  final Function onTap;
+  final UserData userData;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: onTap,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => ChatScreen(
+              user: userData,
+            ),
+          ),
+        );
+      },
       leading: Icon(
         Icons.people,
         color: Colors.white,
       ),
       title: Text(
-        "user_name${index + 1}3${index * 11}",
+        "${userData.username}",
         style: TextStyle(
           color: Colors.white,
         ),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/chat_tile.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/chat_screen.dart';
+import 'package:provider/provider.dart';
 
 class ConversationPage extends StatefulWidget {
   const ConversationPage({
@@ -73,6 +75,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final users = Provider.of<List<UserData>>(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -98,12 +101,10 @@ class _ConversationPageState extends State<ConversationPage> {
               height: 400.0,
               child: ListView.builder(
                 controller: _conversationListController,
-                itemCount: 8,
+                itemCount: users.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ChatTile(
-                    context: context,
-                    index: index,
-                    onTap: navigateToChatScreen,
+                    userData: users[index],
                   );
                 },
               ),
