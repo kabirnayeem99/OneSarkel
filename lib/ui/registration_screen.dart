@@ -125,10 +125,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           borderRadius: BorderRadius.circular(50.0),
                         ),
                         onPressed: () async {
-                          var result = await _auth.signIn(
-                            _email,
-                            _pass,
-                          );
+                          if (_formKey.currentState.validate()) {
+                            print("in sign in screen email is $_email" +
+                                "and password is $_pass.");
+                            await _auth.signIn(_email, _pass).then((result) {
+                              if (result != null) {
+                                print("sign in successful");
+                              } else {
+                                print(
+                                    "Sign in screen screen: user returned $result");
+                              }
+                            });
+                          }
                         }),
                   ],
                 ),

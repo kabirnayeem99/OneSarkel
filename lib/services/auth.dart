@@ -14,7 +14,12 @@ class AuthService {
   }
 
   CurrentUser _userFromFirebase(FirebaseUser user) {
-    return user == null ? null : CurrentUser(userId: user.uid);
+    return user == null
+        ? null
+        : CurrentUser(
+            userId: user.uid,
+            email: user.email,
+            username: Utilities.getUsername(user.email));
   }
 
   Future signIn(String email, String password) async {

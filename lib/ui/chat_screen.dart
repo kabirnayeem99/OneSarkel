@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/components/send_text_field.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/profile_screen.dart';
@@ -20,6 +19,12 @@ class _ChatScreenState extends State<ChatScreen> {
         builder: (context) => ProfileScreen(),
       ),
     );
+  }
+
+  final MessageFieldController = TextEditingController();
+
+  _sendMessage() {
+    var text = MessageFieldController.text;
   }
 
   @override
@@ -81,7 +86,51 @@ class _ChatScreenState extends State<ChatScreen> {
                   itemCount: 20,
                 ),
               ),
-              SendTextField(),
+              Container(
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                        height: 40.0,
+                        margin: EdgeInsets.only(
+                          right: 2.0,
+                          left: 10.0,
+                          top: 10.0,
+                          bottom: 10.0,
+                        ),
+                        child: TextField(
+                          controller: MessageFieldController,
+                          style: TextStyle(color: Colors.black),
+                          textAlignVertical: TextAlignVertical.top,
+                          textAlign: TextAlign.left,
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(60.0),
+                              borderSide: BorderSide.none,
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        iconSize: 40.0,
+                        icon: Icon(Icons.send),
+                        onPressed: () {
+                          print("send button tapped");
+                          _sendMessage();
+                        },
+                        color: SamsungColor.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

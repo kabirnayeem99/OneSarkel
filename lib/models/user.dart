@@ -1,9 +1,13 @@
 
 class CurrentUser {
   String userId;
+  String email;
+  String username;
 
   CurrentUser({
     this.userId,
+    this.email,
+    this.username,
   });
 }
 

@@ -5,7 +5,6 @@ import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart'
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/chat_screen.dart';
 import 'package:provider/provider.dart';
 
 class ConversationPage extends StatefulWidget {
@@ -18,69 +17,83 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage> {
-  ScrollController _conversationListController;
+  // ScrollController _conversationListController;
   Alignment headerAlignment = Alignment.center;
   EdgeInsets headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
   double headerTextSize = 40.0;
 
-  _scrollListener() {
-    if (_conversationListController.offset >=
-            _conversationListController.position.maxScrollExtent &&
-        !_conversationListController.position.outOfRange) {
-      setState(() {
-        headerTextSize = 22.0;
-        headerAlignment = Alignment.topLeft;
-        headerPadding = EdgeInsets.symmetric(
-          vertical: 20.0,
-          horizontal: 20.0,
-        );
-        print("reached bottom");
-      });
-    }
-    if (_conversationListController.offset <=
-            _conversationListController.position.minScrollExtent &&
-        !_conversationListController.position.outOfRange) {
-      setState(
-        () {
-          headerTextSize = 40.0;
-          headerAlignment = Alignment.bottomCenter;
-          headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
-          print("reached top");
-        },
-      );
-    }
-  }
+  // _scrollListener() {
+  //   if (_conversationListController.offset >=
+  //           _conversationListController.position.maxScrollExtent &&
+  //       !_conversationListController.position.outOfRange) {
+  //     setState(() {
+  //       headerTextSize = 22.0;
+  //       headerAlignment = Alignment.topLeft;
+  //       headerPadding = EdgeInsets.symmetric(
+  //         vertical: 20.0,
+  //         horizontal: 20.0,
+  //       );
+  //       print("reached bottom");
+  //     });
+  //   }
+  //   if (_conversationListController.offset <=
+  //           _conversationListController.position.minScrollExtent &&
+  //       !_conversationListController.position.outOfRange) {
+  //     setState(
+  //       () {
+  //         headerTextSize = 40.0;
+  //         headerAlignment = Alignment.bottomCenter;
+  //         headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
+  //         print("reached top");
+  //       },
+  //     );
+  //   }
+  // }
 
-  void navigateToChatScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChatScreen(),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _conversationListController = ScrollController();
-    _conversationListController.addListener(_scrollListener);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _conversationListController.dispose();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _conversationListController = ScrollController();
+  //   _conversationListController.addListener(_scrollListener);
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _conversationListController.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final users = Provider.of<List<UserData>>(context);
+    final users = Provider.of<List<UserData>>(context) ?? [];
+    final currentUser = Provider.of<CurrentUser>(context) ?? "User";
+    void handleClick(String value) {
+      if (value == "Logout") {
+        AuthService().signOut();
+      } else if (value == "Settings") {
+        //TODO: settings will be here
+      }
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: SamsungColor.black,
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'Settings'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AuthService().signOut();
-        },
+        onPressed: () {},
         backgroundColor: SamsungColor.primaryDark,
         child: Icon(
           Icons.message,
@@ -100,7 +113,6 @@ class _ConversationPageState extends State<ConversationPage> {
             child: SizedBox(
               height: 400.0,
               child: ListView.builder(
-                controller: _conversationListController,
                 itemCount: users.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ChatTile(
