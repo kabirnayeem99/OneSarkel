@@ -68,11 +68,15 @@ class AuthService {
     await _auth.signOut();
   }
 
-  Future<String> getCurrentUser() async {
-    String currentUserId;
+  Future<UserData> getCurrentUser() async {
+    FirebaseUser currentUser;
     await _auth.currentUser().then((user) {
-      currentUserId = user.uid;
+      currentUser = user;
     });
-    return currentUserId;
+    return UserData(
+      uid: currentUser.uid,
+      username: Utilities.getUsername(currentUser.email),
+      email: currentUser.email,
+    );
   }
 }

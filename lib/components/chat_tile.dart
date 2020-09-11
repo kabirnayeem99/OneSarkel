@@ -18,7 +18,7 @@ class ChatTile extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (BuildContext context) => ChatScreen(
-              user: userData,
+              reciever: userData,
             ),
           ),
         );

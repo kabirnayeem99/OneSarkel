@@ -66,7 +66,7 @@ class _ConversationPageState extends State<ConversationPage> {
   @override
   Widget build(BuildContext context) {
     final users = Provider.of<List<UserData>>(context) ?? [];
-    final currentUser = Provider.of<CurrentUser>(context) ?? "User";
+    final currentUser = Provider.of<UserData>(context) ?? UserData();
     void handleClick(String value) {
       if (value == "Logout") {
         AuthService().signOut();
@@ -107,7 +107,7 @@ class _ConversationPageState extends State<ConversationPage> {
             headerAlignment: headerAlignment,
             headerPadding: headerPadding,
             headerTextSize: headerTextSize,
-            title: "Messaging",
+            title: "Messaging ${currentUser.username}",
           ),
           Expanded(
             child: SizedBox(

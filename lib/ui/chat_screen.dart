@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/message.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
-  ChatScreen({Key key, this.user}) : super(key: key);
-  final UserData user;
+  ChatScreen({Key key, this.reciever}) : super(key: key);
+  final UserData reciever;
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -21,21 +24,29 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  final MessageFieldController = TextEditingController();
-
-  _sendMessage() {
-    var text = MessageFieldController.text;
-  }
+  final messageFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = Provider.of<UserData>(context) ?? UserData();
+    _sendMessage() {
+      print("Current user id: ${currentUser.uid}"
+          "current user email ${currentUser.email}");
+      var text = messageFieldController.text;
+      Message _message = Message(
+        recieverId: widget.reciever.uid,
+        senderId: currentUser.uid,
+        timestamp: Timestamp.now(),
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: SamsungColor.black,
           elevation: 0.0,
           title: GestureDetector(
-            child: Text("${widget.user.username}"),
+            child: Text("${widget.reciever.username}"),
             onTap: navigateToProfile,
           ),
           actions: [
@@ -76,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       width: 30.0,
                       child: Text(
                         "These are all the Dummy messages, dummy dummy \n "
-                        "sing with me, dummy dummy...",
+                            "sing with me, dummy dummy...",
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -100,7 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           bottom: 10.0,
                         ),
                         child: TextField(
-                          controller: MessageFieldController,
+                          controller: messageFieldController,
                           style: TextStyle(color: Colors.black),
                           textAlignVertical: TextAlignVertical.top,
                           textAlign: TextAlign.left,

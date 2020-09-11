@@ -17,15 +17,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<CurrentUser>.value(
       value: _authService.user,
-      child: MaterialApp(
-        title: 'Messaging',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: "Roboto",
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+      child: FutureProvider<UserData>.value(
+        value: _authService.getCurrentUser(),
+        child: MaterialApp(
+          title: 'Messaging',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: "Roboto",
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: Wrapper(),
         ),
-        home: Wrapper(),
       ),
     );
   }
