@@ -24,7 +24,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.user);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -53,34 +52,33 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (BuildContext context, int index) {
-                    return Flexible(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: SamsungColor.primaryDark,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            bottomLeft: Radius.circular(50.0),
-                            topRight: Radius.circular(60.0),
-                          ),
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: SamsungColor.primaryDark,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          bottomLeft: Radius.circular(50.0),
+                          topRight: Radius.circular(60.0),
                         ),
-                        margin: EdgeInsets.only(
-                          left: 60.0,
-                          top: 16.0,
-                          right: 10.0,
-                        ),
-                        padding: EdgeInsets.all(10.0),
-                        // height: 40.0,
-                        width: 30.0,
-                        child: Text(
-                          "wfafdassdfas gsdgsdfgsd sfgsdfg sgfsdfgs ",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                      ),
+                      margin: EdgeInsets.only(
+                        left: 60.0,
+                        top: 16.0,
+                        right: 10.0,
+                      ),
+                      padding: EdgeInsets.all(10.0),
+                      // height: 40.0,
+                      width: 30.0,
+                      child: Text(
+                        "These are all the Dummy messages, dummy dummy \n "
+                        "sing with me, dummy dummy...",
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
                       ),
                     );
                   },
-                  itemCount: 10,
+                  itemCount: 20,
                 ),
               ),
               SendTextField(),
