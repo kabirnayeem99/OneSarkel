@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
     return StreamProvider<CurrentUser>.value(
       value: _authService.user,
       child: FutureProvider<UserData>.value(
-        value: _authService.getCurrentUser(),
+        catchError: (_, __) => null,
+        value: _authService.getCurrentUser() ?? UserData(),
         child: MaterialApp(
           title: 'Messaging',
           debugShowCheckedModeBanner: false,
