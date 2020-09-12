@@ -6,9 +6,11 @@
 
 <p align="center">
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
-    <img src="https://img.shields.io/github/license/jesusrp98/spacex-go.svg?style=for-the-badge">
+    <img src="https://img.shields.io/github/license/kabirnayeem99/flutter_one_ui_messaging_app.svg?style=for-the-badge">
+    
   </a>
 </p>
+
 
 ### About the project
 
