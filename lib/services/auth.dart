@@ -70,12 +70,22 @@ class AuthService {
 
   Future<UserData> getCurrentUser() async {
     FirebaseUser currentUser;
+
     await _auth.currentUser().then((user) {
       currentUser = user;
     });
+    String username;
+    // get the current user name for the current user from the cloud
+    // firestore
+    await firestore
+        .collection("users")
+        .document(currentUser.uid)
+        .get()
+        .then((value) => username = value.data["username"]);
+    print("username is $username");
     return UserData(
       uid: currentUser.uid,
-      username: Utilities.getUsername(currentUser.email),
+      username: username,
       email: currentUser.email,
     );
   }

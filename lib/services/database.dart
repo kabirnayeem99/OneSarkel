@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/message.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 
 class DatabaseService {
   final String uid;
@@ -34,5 +36,19 @@ class DatabaseService {
     // and turns this into a more simplified object
     // with only two properties.
     return userCollection.snapshots().map(_updateUserDataFromSnapshot);
+  }
+
+  Future<void> addMessagesToFirestore(
+    Message message,
+    UserData reciever,
+    UserData sender,
+  ) async {
+    var map = message.toMap();
+
+    await firestore
+        .collection("messages")
+        .document(message.senderId)
+        .collection(message.recieverId)
+        .add(map);
   }
 }

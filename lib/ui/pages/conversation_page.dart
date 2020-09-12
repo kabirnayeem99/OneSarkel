@@ -107,7 +107,7 @@ class _ConversationPageState extends State<ConversationPage> {
             headerAlignment: headerAlignment,
             headerPadding: headerPadding,
             headerTextSize: headerTextSize,
-            title: "Messaging ${currentUser.username}",
+            title: "Hi, ${currentUser.username}",
           ),
           Expanded(
             child: SizedBox(
