@@ -13,6 +13,7 @@ class DatabaseService {
 
   Future updateUserData(String username, String email) async {
     return await userCollection.document(uid).setData({
+      "uid": this.uid,
       "username": username,
       "email": email,
     });
@@ -24,7 +25,7 @@ class DatabaseService {
     // the user model, it then turns them into a list, which is needed to be.
     return snapshot.documents.map((document) {
       return UserData(
-        uid: document.data["userId"],
+        uid: document.documentID,
         username: document.data["username"],
         email: document.data["email"],
       );

@@ -83,6 +83,7 @@ class AuthService {
         .get()
         .then((value) => username = value.data["username"]);
     print("username is $username");
+    print("user id is ${currentUser.email}");
     return UserData(
       uid: currentUser.uid,
       username: username,

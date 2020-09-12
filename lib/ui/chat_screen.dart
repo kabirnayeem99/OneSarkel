@@ -35,7 +35,7 @@ class _ChatScreenState extends State<ChatScreen> {
     UserData currentUser = Provider.of<UserData>(context) ?? UserData();
 
     sendMessage(UserData reciever) {
-      print("done ${reciever.username}");
+      print("done ${reciever.uid}");
       var text = messageFieldController.text;
       Message _message = Message(
         recieverId: reciever.uid,
@@ -144,6 +144,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         icon: Icon(Icons.send),
                         onPressed: () {
                           sendMessage(widget.reciever);
+                          print(widget.reciever.username);
                         },
                         color: SamsungColor.primary,
                       ),

@@ -67,6 +67,7 @@ class _ConversationPageState extends State<ConversationPage> {
   Widget build(BuildContext context) {
     final users = Provider.of<List<UserData>>(context) ?? [];
     final currentUser = Provider.of<UserData>(context) ?? UserData();
+
     void handleClick(String value) {
       if (value == "Logout") {
         AuthService().signOut();
