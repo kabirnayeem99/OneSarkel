@@ -33,21 +33,19 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     UserData currentUser = Provider.of<UserData>(context) ?? UserData();
-    sendMessage() {
-      print("Current user id: ${currentUser.uid} "
-          "reciever user id ${widget.reciever.uid}");
-      print("SENT MESSAGE: "
-          "${messageFieldController.text}");
+
+    sendMessage(UserData reciever) {
+      print("done ${reciever.username}");
       var text = messageFieldController.text;
       Message _message = Message(
-        recieverId: widget.reciever.uid,
+        recieverId: reciever.uid,
         senderId: currentUser.uid,
         timestamp: Timestamp.now(),
         messageText: text,
       );
       _databaseService.addMessagesToFirestore(
         _message,
-        widget.reciever,
+        reciever,
         currentUser,
       );
     }
@@ -98,9 +96,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       // height: 40.0,
                       width: 30.0,
                       child: Text(
-                        "These are all the Dummy messages, dummy dummy ${widget
-                            .reciever.username} \n "
-                            "sing with me, dummy dummy...",
+                        "These are all the Dummy messages, dummy dummy ${widget.reciever.username} \n "
+                        "sing with me, dummy dummy...",
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -146,8 +143,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         iconSize: 40.0,
                         icon: Icon(Icons.send),
                         onPressed: () {
-                          print("send button tapped");
-                          sendMessage();
+                          sendMessage(widget.reciever);
                         },
                         color: SamsungColor.primary,
                       ),

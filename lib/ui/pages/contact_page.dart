@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/contact_tile.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,6 @@ class _ContactPageState extends State<ContactPage> {
   Alignment headerAlignment = Alignment.center;
   EdgeInsets headerPadding = EdgeInsets.only(bottom: 90.0, top: 60.0);
   double headerTextSize = 40.0;
-  AuthService _auth = AuthService();
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
