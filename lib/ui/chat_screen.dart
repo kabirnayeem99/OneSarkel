@@ -2,13 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/message.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
+import 'package:flutter_samsung_messaging_app_clone/services/database.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:flutter_samsung_messaging_app_clone/ui/profile_screen.dart';
 import 'package:provider/provider.dart';
 
+final messageFieldController = TextEditingController();
+final DatabaseService _databaseService = DatabaseService();
+
 class ChatScreen extends StatefulWidget {
-  ChatScreen({Key key, this.reciever}) : super(key: key);
   final UserData reciever;
+
+  ChatScreen({this.reciever});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -24,19 +29,26 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  final messageFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var currentUser = Provider.of<UserData>(context) ?? UserData();
-    _sendMessage() {
-      print("Current user id: ${currentUser.uid}"
-          "current user email ${currentUser.email}");
+    UserData currentUser = Provider.of<UserData>(context) ?? UserData();
+    sendMessage() {
+      print("Current user id: ${currentUser.uid} "
+          "reciever user id ${widget.reciever.uid}");
+      print("SENT MESSAGE: "
+          "${messageFieldController.text}");
       var text = messageFieldController.text;
       Message _message = Message(
         recieverId: widget.reciever.uid,
         senderId: currentUser.uid,
         timestamp: Timestamp.now(),
+        messageText: text,
+      );
+      _databaseService.addMessagesToFirestore(
+        _message,
+        widget.reciever,
+        currentUser,
       );
     }
 
@@ -86,7 +98,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       // height: 40.0,
                       width: 30.0,
                       child: Text(
-                        "These are all the Dummy messages, dummy dummy \n "
+                        "These are all the Dummy messages, dummy dummy ${widget
+                            .reciever.username} \n "
                             "sing with me, dummy dummy...",
                         style: TextStyle(
                           color: Colors.white,
@@ -134,7 +147,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         icon: Icon(Icons.send),
                         onPressed: () {
                           print("send button tapped");
-                          _sendMessage();
+                          sendMessage();
                         },
                         color: SamsungColor.primary,
                       ),

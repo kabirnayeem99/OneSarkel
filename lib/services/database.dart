@@ -50,5 +50,11 @@ class DatabaseService {
         .document(message.senderId)
         .collection(message.recieverId)
         .add(map);
+
+    await firestore
+        .collection("messages")
+        .document(message.recieverId)
+        .collection(message.senderId)
+        .add(map);
   }
 }
