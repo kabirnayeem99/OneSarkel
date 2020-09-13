@@ -35,7 +35,7 @@ class _ChatScreenState extends State<ChatScreen> {
     UserData currentUser = Provider.of<UserData>(context) ?? UserData();
 
     sendMessage(UserData reciever) {
-      print("done ${reciever.uid}");
+      print("done ${currentUser.uid}");
       var text = messageFieldController.text;
       Message _message = Message(
         recieverId: reciever.uid,
@@ -81,33 +81,55 @@ class _ChatScreenState extends State<ChatScreen> {
                         .collection("messages")
                         .document(currentUser.uid)
                         .collection(widget.reciever.uid)
-                        .orderBy("timestamp")
+                        .orderBy("timestamp", descending: false)
                         .snapshots(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.data == null) {
                         return Center(child: CircularProgressIndicator());
                       } else {
+                        print(
+                            "sender id from firestore: ${snapshot.data.documents[0]["senderId"]}");
                         return ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
+                            bool isSender = snapshot.data.documents[index]
+                                    ["senderId"] ==
+                                currentUser.uid;
                             return Container(
-                              decoration: BoxDecoration(
-                                color: SamsungColor.primaryDark,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(50),
-                                  bottomLeft: Radius.circular(50.0),
-                                  topRight: Radius.circular(60.0),
-                                ),
-                              ),
-                              margin: EdgeInsets.only(
-                                left: 60.0,
-                                top: 16.0,
-                                right: 10.0,
-                              ),
+                              decoration: isSender
+                                  ? BoxDecoration(
+                                      color: SamsungColor.primaryDark,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(50),
+                                        bottomLeft: Radius.circular(50.0),
+                                        topRight: Radius.circular(60.0),
+                                      ),
+                                    )
+                                  : BoxDecoration(
+                                      color: SamsungColor.primary,
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(50),
+                                        bottomRight: Radius.circular(50.0),
+                                        topLeft: Radius.circular(60.0),
+                                      ),
+                                    ),
+                              margin: isSender
+                                  ? EdgeInsets.only(
+                                      left: 60.0,
+                                      top: 16.0,
+                                      right: 10.0,
+                                    )
+                                  : EdgeInsets.only(
+                                      left: 10.0,
+                                      top: 16.0,
+                                      right: 60.0,
+                                    ),
                               padding: EdgeInsets.all(10.0),
                               // height: 40.0,
-                              width: 30.0,
+                              // width: 30.0,
                               child: Text(
                                 snapshot.data.documents[index]["messageText"],
+                                textAlign:
+                                    isSender ? TextAlign.right : TextAlign.left,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
