@@ -65,7 +65,12 @@ class _ContactPageState extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _userData = Provider.of<List<UserData>>(context) ?? List<UserData>();
+    final _users = Provider.of<List<UserData>>(context) ?? List<UserData>();
+    final currentUser = Provider.of<UserData>(context) ?? UserData();
+    //it removes current user from the list
+    _users.removeWhere((userData) {
+      return userData.uid == currentUser.uid;
+    });
     return Scaffold(
       backgroundColor: SamsungColor.black,
       body: Column(
@@ -76,10 +81,10 @@ class _ContactPageState extends State<ContactPage> {
               height: 400.0,
               child: ListView.builder(
                 controller: _contactListController,
-                itemCount: _userData.length,
+                itemCount: _users.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ContactTile(
-                    userData: _userData[index],
+                    userData: _users[index],
                   );
                 },
               ),

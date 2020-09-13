@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/message.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
@@ -28,7 +29,6 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,36 +76,48 @@ class _ChatScreenState extends State<ChatScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: SamsungColor.primaryDark,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          bottomLeft: Radius.circular(50.0),
-                          topRight: Radius.circular(60.0),
-                        ),
-                      ),
-                      margin: EdgeInsets.only(
-                        left: 60.0,
-                        top: 16.0,
-                        right: 10.0,
-                      ),
-                      padding: EdgeInsets.all(10.0),
-                      // height: 40.0,
-                      width: 30.0,
-                      child: Text(
-                        "These are all the Dummy messages, dummy dummy ${widget.reciever.username} \n "
-                        "sing with me, dummy dummy...",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: 20,
-                ),
+                child: StreamBuilder(
+                    stream: Firestore.instance
+                        .collection("messages")
+                        .document(currentUser.uid)
+                        .collection(widget.reciever.uid)
+                        .orderBy("timestamp")
+                        .snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.data == null) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        return ListView.builder(
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: SamsungColor.primaryDark,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(50),
+                                  bottomLeft: Radius.circular(50.0),
+                                  topRight: Radius.circular(60.0),
+                                ),
+                              ),
+                              margin: EdgeInsets.only(
+                                left: 60.0,
+                                top: 16.0,
+                                right: 10.0,
+                              ),
+                              padding: EdgeInsets.all(10.0),
+                              // height: 40.0,
+                              width: 30.0,
+                              child: Text(
+                                snapshot.data.documents[index]["messageText"],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: snapshot.data.documents.length,
+                        );
+                      }
+                    }),
               ),
               Container(
                 child: Row(

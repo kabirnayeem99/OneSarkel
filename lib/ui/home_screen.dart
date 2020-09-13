@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with TickerProviderStateMixin<HomeScreen> {
   PageController homeScreenPageController = PageController();
-  int _page = 1;
+  int _page = 0;
 
   void navigationTapped(page) {
     homeScreenPageController.animateToPage(

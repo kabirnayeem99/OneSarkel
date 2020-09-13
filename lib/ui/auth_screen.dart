@@ -74,6 +74,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Padding(
                     padding: EdgeInsets.all(10.0),
                     child: TextFormField(
+                      obscureText: true,
                       style:
                           TextStyle(color: SamsungColor.white, fontSize: 20.0),
                       validator: (typedPassword) => typedPassword.length < 6
