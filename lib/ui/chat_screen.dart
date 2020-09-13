@@ -10,6 +10,9 @@ import 'package:provider/provider.dart';
 
 final messageFieldController = TextEditingController();
 final DatabaseService _databaseService = DatabaseService();
+ScrollController _listScrollController;
+bool _isOnTop = true;
+FocusNode _focus = FocusNode();
 
 class ChatScreen extends StatefulWidget {
   final UserData reciever;
@@ -30,12 +33,37 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  void _onFocusChange() {
+    if (_focus.hasFocus) {
+      print("keyboard focued");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _listScrollController = ScrollController();
+    _focus.addListener(_onFocusChange);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _listScrollController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     UserData currentUser = Provider.of<UserData>(context) ?? UserData();
+    _scrollToBottom() {
+      _listScrollController.animateTo(
+          _listScrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 250),
+          curve: Curves.easeOut);
+      setState(() => _isOnTop = false);
+    }
 
     sendMessage(UserData reciever) {
-      print("done ${currentUser.uid}");
       var text = messageFieldController.text;
       Message _message = Message(
         recieverId: reciever.uid,
@@ -48,6 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
         reciever,
         currentUser,
       );
+      messageFieldController.clear();
     }
 
     return SafeArea(
@@ -75,7 +104,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
+              Flexible(
                 child: StreamBuilder(
                     stream: Firestore.instance
                         .collection("messages")
@@ -86,10 +115,17 @@ class _ChatScreenState extends State<ChatScreen> {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.data == null) {
                         return Center(child: CircularProgressIndicator());
+                        // SchedulerBinding.instance.addPostFrameCallback((_) {
+                        //   _listScrollController.animateTo(
+                        //     _listScrollController.position.minScrollExtent,
+                        //     duration: Duration(milliseconds: 250),
+                        //     curve: Curves.easeInOut,
+                        //   );
+                        // });
+
                       } else {
-                        print(
-                            "sender id from firestore: ${snapshot.data.documents[0]["senderId"]}");
                         return ListView.builder(
+                          controller: _listScrollController,
                           itemBuilder: (BuildContext context, int index) {
                             bool isSender = snapshot.data.documents[index]
                                     ["senderId"] ==
@@ -101,35 +137,35 @@ class _ChatScreenState extends State<ChatScreen> {
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(50),
                                         bottomLeft: Radius.circular(50.0),
-                                        topRight: Radius.circular(60.0),
-                                      ),
-                                    )
+                                  topRight: Radius.circular(60.0),
+                                ),
+                              )
                                   : BoxDecoration(
-                                      color: SamsungColor.primary,
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(50),
-                                        bottomRight: Radius.circular(50.0),
-                                        topLeft: Radius.circular(60.0),
-                                      ),
-                                    ),
+                                color: SamsungColor.primary,
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(50),
+                                  bottomRight: Radius.circular(50.0),
+                                  topLeft: Radius.circular(60.0),
+                                ),
+                              ),
                               margin: isSender
                                   ? EdgeInsets.only(
-                                      left: 60.0,
-                                      top: 16.0,
-                                      right: 10.0,
-                                    )
+                                left: 60.0,
+                                top: 16.0,
+                                right: 10.0,
+                              )
                                   : EdgeInsets.only(
-                                      left: 10.0,
-                                      top: 16.0,
-                                      right: 60.0,
-                                    ),
+                                left: 10.0,
+                                top: 16.0,
+                                right: 60.0,
+                              ),
                               padding: EdgeInsets.all(10.0),
                               // height: 40.0,
                               // width: 30.0,
                               child: Text(
                                 snapshot.data.documents[index]["messageText"],
                                 textAlign:
-                                    isSender ? TextAlign.right : TextAlign.left,
+                                isSender ? TextAlign.right : TextAlign.left,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -141,26 +177,22 @@ class _ChatScreenState extends State<ChatScreen> {
                       }
                     }),
               ),
-              Container(
+              Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 4,
+                      flex: 5,
                       child: Container(
-                        height: 40.0,
-                        margin: EdgeInsets.only(
-                          right: 2.0,
-                          left: 10.0,
-                          top: 10.0,
-                          bottom: 10.0,
-                        ),
+                        // height: 50.0,
                         child: TextField(
+                          focusNode: _focus,
+                          style: TextStyle(
+                              color: SamsungColor.black, fontSize: 20.0),
                           controller: messageFieldController,
-                          style: TextStyle(color: Colors.black),
-                          textAlignVertical: TextAlignVertical.top,
-                          textAlign: TextAlign.left,
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(20.0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(60.0),
                               borderSide: BorderSide.none,
@@ -178,7 +210,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         icon: Icon(Icons.send),
                         onPressed: () {
                           sendMessage(widget.reciever);
-                          print(widget.reciever.username);
+                          _scrollToBottom();
                         },
                         color: SamsungColor.primary,
                       ),
