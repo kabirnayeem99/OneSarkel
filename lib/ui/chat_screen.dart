@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/message.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
@@ -42,7 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _listScrollController = ScrollController();
+    _listScrollController = ScrollController(initialScrollOffset: 20.0);
     _focus.addListener(_onFocusChange);
   }
 
@@ -65,18 +64,20 @@ class _ChatScreenState extends State<ChatScreen> {
 
     sendMessage(UserData reciever) {
       var text = messageFieldController.text;
-      Message _message = Message(
-        recieverId: reciever.uid,
-        senderId: currentUser.uid,
-        timestamp: Timestamp.now(),
-        messageText: text,
-      );
-      _databaseService.addMessagesToFirestore(
-        _message,
-        reciever,
-        currentUser,
-      );
-      messageFieldController.clear();
+      if (text.length > 0) {
+        Message _message = Message(
+          recieverId: reciever.uid,
+          senderId: currentUser.uid,
+          timestamp: Timestamp.now(),
+          messageText: text,
+        );
+        _databaseService.addMessagesToFirestore(
+          _message,
+          reciever,
+          currentUser,
+        );
+        messageFieldController.clear();
+      }
     }
 
     return SafeArea(
@@ -99,127 +100,132 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
-        body: Container(
-          color: SamsungColor.black,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: StreamBuilder(
-                    stream: Firestore.instance
-                        .collection("messages")
-                        .document(currentUser.uid)
-                        .collection(widget.reciever.uid)
-                        .orderBy("timestamp", descending: false)
-                        .snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.data == null) {
-                        return Center(child: CircularProgressIndicator());
-                        // SchedulerBinding.instance.addPostFrameCallback((_) {
-                        //   _listScrollController.animateTo(
-                        //     _listScrollController.position.minScrollExtent,
-                        //     duration: Duration(milliseconds: 250),
-                        //     curve: Curves.easeInOut,
-                        //   );
-                        // });
-
-                      } else {
-                        return ListView.builder(
-                          controller: _listScrollController,
-                          itemBuilder: (BuildContext context, int index) {
-                            bool isSender = snapshot.data.documents[index]
-                                    ["senderId"] ==
-                                currentUser.uid;
-                            return Container(
-                              decoration: isSender
-                                  ? BoxDecoration(
-                                      color: SamsungColor.primaryDark,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(50),
-                                        bottomLeft: Radius.circular(50.0),
-                                  topRight: Radius.circular(60.0),
+        body: StreamBuilder(
+          stream: Firestore.instance
+              .collection("messages")
+              .document(currentUser.uid)
+              .collection(widget.reciever.uid)
+              .orderBy("timestamp", descending: false)
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return snapshot.data == null
+                ? Container(
+                    color: SamsungColor.black,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ))
+                : Container(
+                    color: SamsungColor.black,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: ListView.builder(
+                            controller: _listScrollController,
+                            itemBuilder: (BuildContext context, int index) {
+                              bool isSender = snapshot.data.documents[index]
+                                      ["senderId"] ==
+                                  currentUser.uid;
+                              return Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: Container(
+                                  decoration: isSender
+                                      ? BoxDecoration(
+                                          color: SamsungColor.primaryDark,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(50),
+                                            bottomLeft: Radius.circular(50.0),
+                                            topRight: Radius.circular(60.0),
+                                          ),
+                                        )
+                                      : BoxDecoration(
+                                          color: SamsungColor.primary,
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(50),
+                                            bottomRight: Radius.circular(50.0),
+                                            topLeft: Radius.circular(60.0),
+                                          ),
+                                        ),
+                                  margin: isSender
+                                      ? EdgeInsets.only(
+                                          left: 60.0,
+                                          top: 16.0,
+                                          right: 10.0,
+                                        )
+                                      : EdgeInsets.only(
+                                          left: 10.0,
+                                          top: 16.0,
+                                          right: 60.0,
+                                        ),
+                                  padding: EdgeInsets.all(10.0),
+                                  // height: 40.0,
+                                  // width: 30.0,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      snapshot.data.documents[index]
+                                          ["messageText"],
+                                      textAlign: isSender
+                                          ? TextAlign.right
+                                          : TextAlign.left,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              )
-                                  : BoxDecoration(
-                                color: SamsungColor.primary,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(50),
-                                  bottomRight: Radius.circular(50.0),
-                                  topLeft: Radius.circular(60.0),
-                                ),
-                              ),
-                              margin: isSender
-                                  ? EdgeInsets.only(
-                                left: 60.0,
-                                top: 16.0,
-                                right: 10.0,
-                              )
-                                  : EdgeInsets.only(
-                                left: 10.0,
-                                top: 16.0,
-                                right: 60.0,
-                              ),
-                              padding: EdgeInsets.all(10.0),
-                              // height: 40.0,
-                              // width: 30.0,
-                              child: Text(
-                                snapshot.data.documents[index]["messageText"],
-                                textAlign:
-                                isSender ? TextAlign.right : TextAlign.left,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            );
-                          },
-                          itemCount: snapshot.data.documents.length,
-                        );
-                      }
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: Container(
-                        // height: 50.0,
-                        child: TextField(
-                          focusNode: _focus,
-                          style: TextStyle(
-                              color: SamsungColor.black, fontSize: 20.0),
-                          controller: messageFieldController,
-                          cursorColor: Colors.black,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(20.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(60.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            fillColor: Colors.white,
-                            filled: true,
+                              );
+                            },
+                            itemCount: snapshot.data.documents.length,
                           ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: Container(
+                                  // height: 50.0,
+                                  child: TextField(
+                                    focusNode: _focus,
+                                    style: TextStyle(
+                                        color: SamsungColor.black,
+                                        fontSize: 20.0),
+                                    controller: messageFieldController,
+                                    cursorColor: Colors.black,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(20.0),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(60.0),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: IconButton(
+                                  iconSize: 40.0,
+                                  icon: Icon(Icons.send),
+                                  onPressed: () {
+                                    _scrollToBottom();
+                                    sendMessage(widget.reciever);
+                                  },
+                                  color: SamsungColor.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: IconButton(
-                        iconSize: 40.0,
-                        icon: Icon(Icons.send),
-                        onPressed: () {
-                          sendMessage(widget.reciever);
-                          _scrollToBottom();
-                        },
-                        color: SamsungColor.primary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+                  );
+          },
         ),
       ),
     );
