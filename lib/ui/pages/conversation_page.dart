@@ -65,8 +65,10 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<UserData> users = Provider.of<List<UserData>>(context) ?? [];
-    final currentUser = Provider.of<UserData>(context) ?? UserData();
+    List<UserData> users =
+        Provider.of<List<UserData>>(context, listen: false) ?? [];
+    final currentUser =
+        Provider.of<UserData>(context, listen: false) ?? UserData();
     // it removes the current user from the list
     users.removeWhere((userData) {
       return userData.uid == currentUser.uid;
@@ -108,12 +110,22 @@ class _ConversationPageState extends State<ConversationPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          HeaderTextWidget(
-            headerAlignment: headerAlignment,
-            headerPadding: headerPadding,
-            headerTextSize: headerTextSize,
-            title: "Hi, ${currentUser.username}",
-          ),
+          FutureBuilder<UserData>(
+              future: AuthService().getCurrentUser(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                return snapshot.hasData
+                    ? HeaderTextWidget(
+                        headerAlignment: headerAlignment,
+                        headerPadding: headerPadding,
+                        headerTextSize: headerTextSize,
+                        title: "Hi, ${snapshot.data.username ?? "New User"}",
+                      )
+                    : HeaderTextWidget(
+                        headerAlignment: headerAlignment,
+                        headerPadding: headerPadding,
+                        headerTextSize: headerTextSize,
+                        title: "Please, wait, Mr(s)");
+              }),
           Expanded(
             child: SizedBox(
               height: 400.0,
