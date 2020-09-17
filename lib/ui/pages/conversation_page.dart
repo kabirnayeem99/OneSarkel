@@ -118,7 +118,7 @@ class _ConversationPageState extends State<ConversationPage> {
                         headerAlignment: headerAlignment,
                         headerPadding: headerPadding,
                         headerTextSize: headerTextSize,
-                        title: "Hi, ${snapshot.data.username ?? "New User"}",
+                        title: "Hi, ${snapshot.data.username}",
                       )
                     : HeaderTextWidget(
                         headerAlignment: headerAlignment,

@@ -14,7 +14,6 @@ class HomeScreenBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(_page);
     return CupertinoTabBar(
       border: Border(
         top: BorderSide.none,

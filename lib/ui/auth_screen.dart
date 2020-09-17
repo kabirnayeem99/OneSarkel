@@ -108,8 +108,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           onPressed: () async {
                             FocusScope.of(context).unfocus();
                             if (_formKey.currentState.validate()) {
-                              print("in registration screen email is $_email" +
-                                  "and password is $_pass.");
                               setState(() {
                                 showLoading = true;
                               });
@@ -117,7 +115,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   .register(_email, _pass)
                                   .then((result) {
                                 if (result != null) {
-                                  print("registration successful");
                                   setState(() {
                                     showLoading = false;
                                   });
@@ -125,10 +122,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   setState(() {
                                     showLoading = false;
                                     warningMessage =
-                                        "Try another email address";
+                                    "Try correcting the email or another email address";
                                   });
-                                  print(
-                                      "Registration screen: user returned $result");
                                 }
                               });
                             }
