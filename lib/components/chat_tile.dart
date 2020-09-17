@@ -40,7 +40,7 @@ class ChatTile extends StatelessWidget {
         ),
       ),
       trailing: Text(
-        "1/1/99",
+        userData.lastActive ?? "",
         style: TextStyle(
           color: Colors.white,
         ),

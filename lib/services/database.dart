@@ -11,11 +11,13 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
-  Future updateUserData(String username, String email) async {
+  Future updateUserData(
+      String username, String email, String lastActive) async {
     return await userCollection.document(uid).setData({
       "uid": this.uid,
       "username": username,
       "email": email,
+      "lastActive": lastActive,
     });
   }
 
@@ -28,6 +30,7 @@ class DatabaseService {
         uid: document.documentID,
         username: document.data["username"],
         email: document.data["email"],
+          lastActive: document.data["lastActive"]
       );
     }).toList();
   }

@@ -34,7 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _onFocusChange() {
     if (_focus.hasFocus) {
-      print("keyboard focued");
+      print("keyboard focused");
     }
   }
 

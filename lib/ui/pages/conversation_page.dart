@@ -65,10 +65,8 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<UserData> users =
-        Provider.of<List<UserData>>(context, listen: false) ?? [];
-    final currentUser =
-        Provider.of<UserData>(context, listen: false) ?? UserData();
+    List<UserData> users = Provider.of<List<UserData>>(context) ?? [];
+    final currentUser = Provider.of<UserData>(context) ?? UserData();
     // it removes the current user from the list
     users.removeWhere((userData) {
       return userData.uid == currentUser.uid;
