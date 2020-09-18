@@ -25,14 +25,19 @@ class DatabaseService {
     // this is a private function which takes a firestore snapshot
     // and turns simplifies this using a userData model. After retrieving all
     // the user model, it then turns them into a list, which is needed to be.
-    return snapshot.documents.map((document) {
-      return UserData(
-        uid: document.documentID,
-        username: document.data["username"],
-        email: document.data["email"],
-        lastActive: document.data["lastActive"],
-      );
-    }).toList();
+    List<UserData> userDataList = snapshot.documents
+        .map((document) {
+          return UserData(
+            uid: document.documentID,
+            username: document.data["username"],
+            email: document.data["email"],
+            lastActive: document.data["lastActive"],
+          );
+        })
+        .where((userData) => userData.uid != this.uid)
+        .toList();
+
+    return userDataList;
   }
 
   Stream<List<UserData>> get userData {
