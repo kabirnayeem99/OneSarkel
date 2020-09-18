@@ -30,7 +30,7 @@ class DatabaseService {
         uid: document.documentID,
         username: document.data["username"],
         email: document.data["email"],
-          lastActive: document.data["lastActive"]
+        lastActive: document.data["lastActive"],
       );
     }).toList();
   }

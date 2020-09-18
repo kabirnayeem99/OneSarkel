@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return StreamProvider<List<UserData>>.value(
       value: DatabaseService().userData,
+      catchError: (_, __) => null,
       child: Container(
         color: SamsungColor.black,
         child: SafeArea(

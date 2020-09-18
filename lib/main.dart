@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<CurrentUser>.value(
       value: _authService.user,
+      catchError: (_, __) => null,
       child: FutureProvider<UserData>.value(
         catchError: (_, __) => null,
         value: _authService.getCurrentUser() ?? UserData(),

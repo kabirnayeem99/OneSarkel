@@ -40,7 +40,7 @@ class ChatTile extends StatelessWidget {
         ),
       ),
       trailing: Text(
-        userData.lastActive ?? "",
+        userData.lastActive.toString().replaceRange(5, 7, "") ?? "",
         style: TextStyle(
           color: Colors.white,
         ),

@@ -64,6 +64,11 @@ class _ConversationPageState extends State<ConversationPage> {
   // }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<UserData> users = Provider.of<List<UserData>>(context) ?? [];
     final currentUser = Provider.of<UserData>(context) ?? UserData();
