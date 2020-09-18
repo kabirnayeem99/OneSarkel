@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/screens/wrapper.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/wrapper.dart';
 import 'package:provider/provider.dart';
 
 import 'models/user.dart';

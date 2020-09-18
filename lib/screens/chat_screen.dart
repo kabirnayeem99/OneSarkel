@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/message.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
+import 'package:flutter_samsung_messaging_app_clone/screens/profile_screen.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/database.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 final messageFieldController = TextEditingController();

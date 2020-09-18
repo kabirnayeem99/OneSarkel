@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/auth_screen.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
+import 'package:flutter_samsung_messaging_app_clone/screens/auth_screen.dart';
+import 'package:flutter_samsung_messaging_app_clone/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatefulWidget {

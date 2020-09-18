@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
+import 'package:flutter_samsung_messaging_app_clone/screens/chat_screen.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/chat_screen.dart';
 
 class ContactTile extends StatelessWidget {
   const ContactTile({
