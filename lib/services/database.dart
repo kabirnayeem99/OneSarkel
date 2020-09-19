@@ -73,7 +73,6 @@ class DatabaseService {
         await firestore.collection("messages").getDocuments();
     for (int i = 0; i < snapshot.documents.length; i++) {
       var a = snapshot.documents[i];
-      print(a.documentID);
       if (a.documentID == uid) {
         messageDocument = a;
       }

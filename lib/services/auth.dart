@@ -61,7 +61,6 @@ class AuthService {
       );
       return _userFromFirebase(currentUser);
     } catch (e) {
-      print("Error from Firebase creating new user: $e");
       return null;
     }
   }
@@ -84,8 +83,6 @@ class AuthService {
         .document(currentUser.uid)
         .get()
         .then((value) => username = value.data["username"]);
-    print("username is $username");
-    print("user id is ${currentUser.email}");
     return UserData(
       uid: currentUser.uid,
       username: username,

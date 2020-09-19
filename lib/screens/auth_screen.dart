@@ -158,8 +158,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                print("in sign in screen email is $_email" +
-                                    "and password is $_pass.");
                                 setState(() {
                                   showLoading = true;
                                 });
@@ -167,13 +165,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     .signIn(_email, _pass)
                                     .then((result) {
                                   if (result != null) {
-                                    print("sign in successful");
                                   } else {
                                     setState(() {
                                       showLoading = false;
                                     });
-                                    print(
-                                        "Sign in screen screen: user returned $result");
                                   }
                                 });
                               }

@@ -101,10 +101,8 @@ class _ConversationPageState extends State<ConversationPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => AddConversation()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => AddConversation()));
         },
         backgroundColor: SamsungColor.primaryDark,
         child: Icon(
