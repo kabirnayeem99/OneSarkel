@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/chat_tile.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/header_text.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
+import 'package:flutter_samsung_messaging_app_clone/screens/add_conversation.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +100,12 @@ class _ConversationPageState extends State<ConversationPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => AddConversation()));
+        },
         backgroundColor: SamsungColor.primaryDark,
         child: Icon(
           Icons.message,
