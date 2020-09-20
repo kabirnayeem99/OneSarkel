@@ -77,7 +77,19 @@ class DatabaseService {
         messageDocument = a;
       }
     }
-
     return messageDocument;
+  }
+
+  Future<List<UserData>> fetchUserCollection(UserData currentUser) async {
+    List<UserData> userList = List<UserData>();
+    QuerySnapshot querySnapshot =
+        await firestore.collection("users").getDocuments();
+
+    for (var index = 0; index < querySnapshot.documents.length; index++) {
+      if (querySnapshot.documents[index].documentID != currentUser.uid) {
+        userList.add(UserData.fromMap(querySnapshot.documents[index].data));
+      }
+    }
+    return userList;
   }
 }

@@ -12,10 +12,10 @@ class CurrentUser {
 }
 
 class UserData {
-  final String uid;
-  final String username;
-  final String email;
-  final String lastActive;
+  String uid;
+  String username;
+  String email;
+  String lastActive;
 
   UserData({
     this.uid,
@@ -23,4 +23,11 @@ class UserData {
     this.email,
     this.lastActive,
   });
+
+  UserData.fromMap(Map<String, dynamic> mapData) {
+    this.uid = mapData['uid'];
+    this.username = mapData['username'];
+    this.email = mapData['email'];
+    this.lastActive = mapData['lastActive'];
+  }
 }
