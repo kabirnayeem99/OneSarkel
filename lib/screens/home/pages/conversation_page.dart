@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_samsung_messaging_app_clone/components/chat_tile.dart';
@@ -101,7 +102,7 @@ class _ConversationPageState extends State<ConversationPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).push(CupertinoPageRoute(
               builder: (BuildContext context) => AddConversation()));
         },
         backgroundColor: SamsungColor.primaryDark,
@@ -118,16 +119,16 @@ class _ConversationPageState extends State<ConversationPage> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 return snapshot.hasData
                     ? HeaderTextWidget(
-                        headerAlignment: headerAlignment,
-                        headerPadding: headerPadding,
-                        headerTextSize: headerTextSize,
-                        title: "Hi, ${snapshot.data.username}",
-                      )
+                  headerAlignment: headerAlignment,
+                  headerPadding: headerPadding,
+                  headerTextSize: headerTextSize,
+                  title: "Hi, ${snapshot.data.username}",
+                )
                     : HeaderTextWidget(
-                        headerAlignment: headerAlignment,
-                        headerPadding: headerPadding,
-                        headerTextSize: headerTextSize,
-                        title: "Please, wait, Mr(s)");
+                    headerAlignment: headerAlignment,
+                    headerPadding: headerPadding,
+                    headerTextSize: headerTextSize,
+                    title: "Please, wait, Mr(s)");
               }),
           Expanded(
             child: SizedBox(
