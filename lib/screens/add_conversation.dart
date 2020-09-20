@@ -1,111 +1,92 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
 
 class AddConversation extends StatefulWidget {
   @override
-  _AddConversationState createState() => new _AddConversationState();
+  _AddConversationState createState() => _AddConversationState();
 }
 
 class _AddConversationState extends State<AddConversation> {
-  var queryResultSet = [];
-  var tempSearchStore = [];
+  TextEditingController searchController = TextEditingController();
 
-  initiateSearch(value) {
-    if (value.length == 0) {
-      setState(() {
-        queryResultSet = [];
-        tempSearchStore = [];
-      });
-    }
+  String query = "";
 
-    var capitalizedValue =
-        value.substring(0, 1).toUpperCase() + value.substring(1);
+  List<UserData> userList;
 
-    if (queryResultSet.length == 0 && value.length == 1) {
-      SearchService().searchByName(value).then((QuerySnapshot docs) {
-        for (int i = 0; i < docs.documents.length; ++i) {
-          queryResultSet.add(docs.documents[i].data);
-        }
-      });
-    } else {
-      tempSearchStore = [];
-      queryResultSet.forEach((element) {
-        if (element['businessName'].startsWith(capitalizedValue)) {
-          setState(() {
-            tempSearchStore.add(element);
-          });
-        }
-      });
-    }
+  searchAppBar(context) {
+    return AppBar(
+      elevation: 0.0,
+      backgroundColor: SamsungColor.black,
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back_ios),
+        color: SamsungColor.white,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight + 21),
+        child: Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: TextField(
+            controller: searchController,
+            onChanged: (typedQuery) {
+              setState(() {
+                query = typedQuery;
+              });
+            },
+            autofocus: true,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 35,
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: "Search",
+              hintStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 35,
+                color: Color(0x88ffffff),
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(Icons.clear, color: Colors.white),
+                onPressed: () {
+                  WidgetsBinding.instance
+                      .addPostFrameCallback((_) => searchController.clear());
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  generateSearchResults(String query) {
+    final List<UserData> searchUserList = query.isEmpty
+        ? []
+        : userList.where((UserData user) {
+            String _getEmail = user.email.toLowerCase();
+            String _getUsername = user.username.toLowerCase();
+            String _query = query.toLowerCase();
+            bool matchedUsername = _getUsername.contains(_query);
+            bool matchedEmail = _getEmail.contains(_query);
+
+            return (matchedEmail || matchedUsername);
+          }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          elevation: 0.0,
-          backgroundColor: SamsungColor.black,
-          title: Text('Firestore search'),
-        ),
-        body: ListView(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextField(
-              onChanged: (val) {
-                initiateSearch(val);
-              },
-              decoration: InputDecoration(
-                  prefixIcon: IconButton(
-                    color: Colors.black,
-                    icon: Icon(Icons.arrow_back),
-                    iconSize: 20.0,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  contentPadding: EdgeInsets.only(left: 25.0),
-                  hintText: 'Search by name',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0))),
-            ),
-          ),
-          SizedBox(height: 10.0),
-          GridView.count(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
-              crossAxisCount: 2,
-              crossAxisSpacing: 4.0,
-              mainAxisSpacing: 4.0,
-              primary: false,
-              shrinkWrap: true,
-              children: tempSearchStore.map((element) {
-                return buildResultCard(element);
-              }).toList())
-        ]));
-  }
-}
-
-Widget buildResultCard(data) {
-  return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      elevation: 2.0,
-      child: Container(
-          child: Center(
-              child: Text(
-        data['businessName'],
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 20.0,
-        ),
-      ))));
-}
-
-class SearchService {
-  searchByName(String searchField) {
-    return Firestore.instance
-        .collection('users')
-        .where('username', isEqualTo: searchField.substring(0, 1).toUpperCase())
-        .getDocuments();
+    return Scaffold(
+      appBar: searchAppBar(context),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: generateSearchResults(query),
+      ),
+    );
   }
 }
