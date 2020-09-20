@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/models/user.dart';
-import 'package:flutter_samsung_messaging_app_clone/screens/auth_screen.dart';
 import 'package:flutter_samsung_messaging_app_clone/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
+
+import 'file:///D:/Projects/flutter_one_ui_messaging_app/lib/screens/auth/auth_screen.dart';
 
 class Wrapper extends StatefulWidget {
   Wrapper({Key key}) : super(key: key);

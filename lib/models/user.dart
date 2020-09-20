@@ -1,4 +1,3 @@
-
 class CurrentUser {
   String userId;
   String email;

@@ -122,7 +122,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   setState(() {
                                     showLoading = false;
                                     warningMessage =
-                                    "Try correcting the email or another email address";
+                                        "Try correcting the email or another email address";
                                   });
                                 }
                               });
