@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/components/login_raised_button.dart';
-import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
+import '../theme/samsung_color.dart';
 
 class LogInScreen extends StatefulWidget {
   LogInScreen({Key key}) : super(key: key);
@@ -77,16 +75,10 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
               Column(
                 children: [
-                  LogInRaisedButton(
-                    email: email,
-                    password: password,
-                    screenName: HomeScreen(),
-                  ),
-                  // RegistrationRaisedButton(
-                  //   email: email,
-                  //   password: password,
-                  //   screenName: RegistrationScreen(),
-                  // ),
+                  RaisedButton(
+                    child: Text("LogIn"),
+                    onPressed: () {},
+                  )
                 ],
               ),
             ],

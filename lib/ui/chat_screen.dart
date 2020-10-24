@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/components/send_text_field.dart';
-import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/profile_screen.dart';
+
+import '../components/send_text_field.dart';
+import '../theme/samsung_color.dart';
+import 'profile_screen.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({Key key}) : super(key: key);

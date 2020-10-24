@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
+
+import '../theme/samsung_color.dart';
 
 class HomeScreenBottomNavBar extends StatelessWidget {
   HomeScreenBottomNavBar({

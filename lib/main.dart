@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
-import 'package:flutter_samsung_messaging_app_clone/ui/wrapper.dart';
-import 'package:provider/provider.dart';
+
+import 'ui/wrapper.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,14 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MultiProvider(
-        providers: [
-          Provider<FirebaseAuthService>(
-            create: (context) => FirebaseAuthService(),
-          ),
-        ],
-        child: Wrapper(),
-      ),
+      home: Wrapper(),
     );
   }
 }
