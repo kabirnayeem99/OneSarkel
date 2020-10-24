@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samsung_messaging_app_clone/services/firebase_auth.dart';
+import 'package:flutter_samsung_messaging_app_clone/components/login_raised_button.dart';
 import 'package:flutter_samsung_messaging_app_clone/theme/samsung_color.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_samsung_messaging_app_clone/ui/home_screen.dart';
 
-class LogInScreen extends StatelessWidget {
-  const LogInScreen({Key key}) : super(key: key);
+class LogInScreen extends StatefulWidget {
+  LogInScreen({Key key}) : super(key: key);
 
-  Future<void> _logIn(BuildContext context) async {
-    try {
-      final auth = Provider.of<FirebaseAuthService>(
-        context,
-        listen: false,
-      );
-      await auth.signInAnonymously();
-    } catch (e) {
-      print(e);
-    }
-  }
+  @override
+  _LogInScreenState createState() => _LogInScreenState();
+}
 
+class _LogInScreenState extends State<LogInScreen> {
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +43,7 @@ class LogInScreen extends StatelessWidget {
                 margin: EdgeInsets.all(10.0),
                 child: TextField(
                   onChanged: (value) {
-                    // email = value;
+                    email = value;
                   },
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
@@ -66,7 +61,7 @@ class LogInScreen extends StatelessWidget {
                 margin: EdgeInsets.all(10.0),
                 child: TextField(
                   onChanged: (value) {
-                    // password = value;
+                    password = value;
                   },
                   textAlignVertical: TextAlignVertical.center,
                   textAlign: TextAlign.center,
@@ -82,20 +77,10 @@ class LogInScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  RaisedButton(
-                    elevation: 0.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                    onPressed: () {
-                      _logIn(context);
-                      print("buttonpressed");
-                    },
-                    child: Text(
-                      "Log In",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: SamsungColor.primaryDark,
+                  LogInRaisedButton(
+                    email: email,
+                    password: password,
+                    screenName: HomeScreen(),
                   ),
                   // RegistrationRaisedButton(
                   //   email: email,
@@ -109,31 +94,5 @@ class LogInScreen extends StatelessWidget {
         ),
       ),
     );
-
-    // return Container(
-    //   child: Container(
-    //     color: Colors.white,
-    //     child: Center(
-    //       child: RaisedButton(
-    //         onPressed: () => _logIn,
-    //         child: Text("LogIn"),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
-// class LogInScreen extends StatefulWidget {
-//   LogInScreen({Key key}) : super(key: key);
-
-//   @override
-//   _LogInScreenState createState() => _LogInScreenState();
-// }
-
-// class _LogInScreenState extends State<LogInScreen> {
-//   String email;
-//   String password;
-//   @override
-//   Widget build(BuildContext context) {
-//   }
-// }
