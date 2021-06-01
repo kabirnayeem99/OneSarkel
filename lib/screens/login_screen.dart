@@ -93,11 +93,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                 ),
                 // Fourth comes the login button
-                RaisedButton(
-                  elevation: 0.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
+                ElevatedButton(
                   onPressed: () async {
                     var result = await _auth.signIn(
                       email,
@@ -111,7 +107,6 @@ class _LogInScreenState extends State<LogInScreen> {
                     "Log In",
                     style: TextStyle(color: Colors.white),
                   ),
-                  color: SamsungColor.primaryDark,
                 ),
               ],
             ),

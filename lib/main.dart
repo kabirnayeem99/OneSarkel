@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samsung_messaging_app_clone/services/auth.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///D:/Projects/flutter_one_ui_messaging_app/lib/screens/auth/wrapper.dart';
-
 import 'models/user.dart';
+import 'screens/auth/wrapper.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
